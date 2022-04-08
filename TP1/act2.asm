@@ -35,7 +35,7 @@
 
 .data	IniDataRAM
 	
-Variable1:		dB		16		;Inicializo la variable en 16
+Variable1:		dB		00h		;Inicializo la variable en 16
 Variable2:		dB		0
 Variable3:		dB		0
 Variable4:		dB		0
@@ -181,9 +181,17 @@ May30:
 	CPI 31h
 	JZ num1
 OutNum:
-	LXI H, 2000h
-	INR M
 	OUT 17h
+	MVI A, 08h
+	LXI H, 2000h
+DigitLoop:
+	CMP M
+	JNC Incrementa
+	MVI M, 00h
+	INR L
+	JMP DigitLoop
+Incrementa:
+	INR M
 	JMP Main
 
 num0:
