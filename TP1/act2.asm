@@ -1,11 +1,11 @@
 ;********************************************************************
-;T�cnicas Digitales II
-;Archivo Template para trabajar con el microprocesador 8085
-;Ing. Maggiolo Gustavo
+;Trabajo Práctico N°1 - Lectura de teclado y display
+;Actividad II - Lectura de teclado/Escritura de displays
+;Battaglia Carlo - Escobar Gabriel
 ;********************************************************************
 
 ;********************************************************************
-;	Definici�n de Etiquetas
+;	Definición de Etiquetas
 ;********************************************************************
 
 .define
@@ -30,7 +30,7 @@
 	
 
 ;********************************************************************
-;	Definici�n de Datos en RAM (Variables)
+;	Definición de Datos en RAM (Variables)
 ;********************************************************************
 
 .data	IniDataRAM
@@ -46,7 +46,7 @@ Digito8:		dB		30h
 
 	
 ;********************************************************************
-;	Definici�n de Datos en ROM (Constantes)
+;	Definición de Datos en ROM (Constantes)
 ;********************************************************************
 
 .data	IniDataROM
@@ -96,47 +96,47 @@ Texto:		dB	'C','a','d','e','n','a',0
 ;	Sector de las Interrupciones
 ;********************************************************************
 IntRST1:
-		;Ac� va el c�digo de la Interrupci�n RST1
+		;Acá va el código de la Interrupción RST1
 		
 		RET
 IntRST2:
-		;Ac� va el c�digo de la Interrupci�n RST2
+		;Acá va el código de la Interrupción RST2
 		
 		RET
 IntRST3:
-		;Ac� va el c�digo de la Interrupci�n RST3
+		;Acá va el código de la Interrupción RST3
 		
 		RET
 IntRST4:
-		;Ac� va el c�digo de la Interrupci�n RST4
+		;Acá va el código de la Interrupción RST4
 		
 		RET
 IntTRAP:
-		;Ac� va el c�digo de la Interrupci�n TRAP
+		;Acá va el código de la Interrupción TRAP
 		
 		RET
 IntRST5:
-		;Ac� va el c�digo de la Interrupci�n RST5
+		;Acá va el código de la Interrupción RST5
 		
 		RET
 IntRST55:
-		;Ac� va el c�digo de la Interrupci�n RST5.5
+		;Acá va el código de la Interrupción RST5.5
 		
 		RET
 IntRST6:
-		;Ac� va el c�digo de la Interrupci�n RST6
+		;Acá va el código de la Interrupción RST6
 		
 		RET
 IntRST65:
-		;Ac� va el c�digo de la Interrupci�n RST6.5
+		;Acá va el código de la Interrupción RST6.5
 		
 		RET
 IntRST7:
-		;Ac� va el c�digo de la Interrupci�n RST7
+		;Acá va el código de la Interrupción RST7
 		
 		RET
 IntRST75:
-		;Ac� va el c�digo de la Interrupci�n RST7.5
+		;Acá va el código de la Interrupción RST7.5
 		
 		RET
 
@@ -148,33 +148,37 @@ Boot:
 	LXI	SP,STACK_ADDR	;Inicializo el Puntero de Pila
 
 Main:
-	IN 20h
-	CMP D
-	JZ Main
-	MOV D, A
-	CPI 00h
-	JZ Main
-	CALL CheckNum
-	OUT 17h
-	CALL ShowCount
-	JMP Main
+	IN 20h			;Lee el dato en el puerto 20h
+	CMP D			;El registro D guarda el último dato leído
+	JZ Main			;Si lee lo mismo nuevamente, vuelve a Main (para no actualizar el display)
+	MOV D, A		;Si lee algo distinto, lo guarda en D para la próxima iteración
+	CPI 00h			;Comparo para ver si lo que leyó es 00h (ninguna tecla presionada)
+	JZ Main			;En ese caso, tampoco actualiza el display (vuelve a Main)
+	CALL CheckNum	;Si lo que lee es un dato relevante, chequea si es un número u otro símbolo
+	OUT 17h			;Muestra en el último dígito del display de 7 segmentos el dato ya codificado al retornar CheckNum
+	CALL ShowCount	;Decodifica y muestra la cantidad de veces que se presionó un número (esta información está en memoria)
+	JMP Main		;Bucle
 
 CheckNum:
-	CPI 3Ah
-	JNC NoNum
-	CPI 30h
-	JNC Num			;Si es mayor a 30h y mayor a 39h, no es un n�mero
+	CPI 3Ah			;Comparo el dato leído con 3Ah (10)
+	JNC NoNum		;Si CY=0 el dato es mayor a 39h, por lo tanto no es un número (30h-39h)
+	CPI 30h			;Comparo el límite inferior del rango que determina los números
+	JNC Num			;Si además de ser A<3Ah, se cumple que A>=30h, se trata de un número
 NoNum:
-	MVI A, 3Bh
+	MVI A, 3Bh		;Si no es un número, pongo la codificación en 7 segmentos de la letra E en el acumulador
 	RET
 Num:
-	CALL DecodeNum
-	CALL ContarNum
+	CALL DecodeNum	;Si se trata de un número, lo decodifico para mostrarlo en el display
+	CALL ContarNum	;E incremento la cuenta de veces en que se presionó un número
 	RET
 
+;**********************************************************
+;Esta función compara contra cada dígito de 0 a 9 (30h-39h)
+;y convierte el dato a su codificación en 7 segmentos
+;**********************************************************
 DecodeNum:
 	CPI 39h
-	JZ num9 			;Si era igual a 39h, muestra 9
+	JZ num9
 	CPI 38h
 	JZ num8
 	CPI 37h
@@ -221,28 +225,37 @@ num8:
 num9:
 	MVI A, 4Fh
 	RET
-	
+
+;****************************************************************************
+;Esta función incrementa un número almacenado en memoria, donde cada dígito
+;ocupa una dirección distinta. Es un desperdicio de memoria pero hace facilmente
+;escalable la representación de los números
+;****************************************************************************
 ContarNum:
-	PUSH PSW
-	MVI A, 38h
-	LXI H, Digito1
+	PUSH PSW		;Empila el acumulador para no perder el dato antes de mostrarlo
+	MVI A, 38h		;Guardo 38h (8) para chequear que los digitos lleguen solo a 9
+	LXI H, Digito1	;Comienzo a recorrer la memoria en el primer dígito
 DigitLoop:
-	CMP M
-	JNC Incrementa
-	MVI M, 30h
-	INR L
-	JMP DigitLoop
+	CMP M			;Comparo el dígito con A (8)
+	JNC Incrementa	;Si el valor en M es menor 0 igual a 8, lo incrementa
+	MVI M, 30h		;Si es mayor a 8, reseteo el dígito poniendolo en 30h (0)
+	INR L			;Incremento L, la parte baja de la dirección almacenada en el par HL
+	JMP DigitLoop	;Repito las operaciones para el siguiente dígito hasta que pueda incrementar uno
 Incrementa:
-	INR M
+	INR M			;Incrementa el valor almacenado en la dirección que apunta el par HL después de haber modificado o no L
 	POP PSW
 	RET
 
+;*********************************************************************
+;Decodifica cada 8 dígitos almacenados de forma contigua en la memoria
+;y los muestra en su respectivo digito
+;*********************************************************************
 ShowCount:
-	LXI H, Digito1
-	MOV A, M
-	CALL DecodeNum
-	OUT 2Fh
-	LXI H, Digito2
+	LXI H, Digito1	;Pone la dirección del primer dígito en HL
+	MOV A, M		;Pasa el valor al acumulador
+	CALL DecodeNum	;Decodifica el dígito
+	OUT 2Fh			;Lo muestra en el primer dígito de derecha a izquierda
+	LXI H, Digito2  ;Repite lo anterior para el segundo dígito, etc.
 	MOV A, M
 	CALL DecodeNum
 	OUT 2Dh
@@ -271,5 +284,5 @@ ShowCount:
 	CALL DecodeNum
 	OUT 21h
 	RET
-	
+
 	HLT
