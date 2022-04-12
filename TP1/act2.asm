@@ -1,11 +1,11 @@
 ;********************************************************************
-;Técnicas Digitales II
+;Tï¿½cnicas Digitales II
 ;Archivo Template para trabajar con el microprocesador 8085
 ;Ing. Maggiolo Gustavo
 ;********************************************************************
 
 ;********************************************************************
-;	Definición de Etiquetas
+;	Definiciï¿½n de Etiquetas
 ;********************************************************************
 
 .define
@@ -30,19 +30,23 @@
 	
 
 ;********************************************************************
-;	Definición de Datos en RAM (Variables)
+;	Definiciï¿½n de Datos en RAM (Variables)
 ;********************************************************************
 
 .data	IniDataRAM
 	
-Variable1:		dB		00h		;Inicializo la variable en 16
-Variable2:		dB		0
-Variable3:		dB		0
-Variable4:		dB		0
+Digito1:		dB		30h		;Inicializo las variables en 30h (0 en el display)
+Digito2:		dB		30h
+Digito3:		dB		30h
+Digito4:		dB		30h
+Digito5:		dB		30h
+Digito6:		dB		30h
+Digito7:		dB		30h
+Digito8:		dB		30h
 
 	
 ;********************************************************************
-;	Definición de Datos en ROM (Constantes)
+;	Definiciï¿½n de Datos en ROM (Constantes)
 ;********************************************************************
 
 .data	IniDataROM
@@ -92,47 +96,47 @@ Texto:		dB	'C','a','d','e','n','a',0
 ;	Sector de las Interrupciones
 ;********************************************************************
 IntRST1:
-		;Acá va el código de la Interrupción RST1
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST1
 		
 		RET
 IntRST2:
-		;Acá va el código de la Interrupción RST2
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST2
 		
 		RET
 IntRST3:
-		;Acá va el código de la Interrupción RST3
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST3
 		
 		RET
 IntRST4:
-		;Acá va el código de la Interrupción RST4
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST4
 		
 		RET
 IntTRAP:
-		;Acá va el código de la Interrupción TRAP
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n TRAP
 		
 		RET
 IntRST5:
-		;Acá va el código de la Interrupción RST5
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST5
 		
 		RET
 IntRST55:
-		;Acá va el código de la Interrupción RST5.5
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST5.5
 		
 		RET
 IntRST6:
-		;Acá va el código de la Interrupción RST6
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST6
 		
 		RET
 IntRST65:
-		;Acá va el código de la Interrupción RST6.5
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST6.5
 		
 		RET
 IntRST7:
-		;Acá va el código de la Interrupción RST7
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST7
 		
 		RET
 IntRST75:
-		;Acá va el código de la Interrupción RST7.5
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST7.5
 		
 		RET
 
@@ -142,7 +146,6 @@ IntRST75:
 ;********************************************************************
 Boot:
 	LXI	SP,STACK_ADDR	;Inicializo el Puntero de Pila
-	MVI B, 00h			;Inicializo B como contador en 0
 
 Main:
 	IN 20h
@@ -151,18 +154,26 @@ Main:
 	MOV D, A
 	CPI 00h
 	JZ Main
-	CPI 30h
-	JNC May30			;Si A>=30h (0) salto. Si no, no es un número
-NoNum:
-	MVI A, 3Bh
+	CALL CheckNum
 	OUT 17h
+	CALL ShowCount
 	JMP Main
 
+CheckNum:
+	CPI 3Ah
+	JNC NoNum
+	CPI 30h
+	JNC Num			;Si es mayor a 30h y mayor a 39h, no es un nï¿½mero
+NoNum:
+	MVI A, 3Bh
+	RET
+Num:
+	CALL DecodeNum
+	CALL ContarNum
+	RET
 
-May30:
-	JZ num0 			;Si Z=1 -> A=30h
+DecodeNum:
 	CPI 39h
-	JNC NoNum			;Si es mayor a 30h y mayor a 39h, no es un número
 	JZ num9 			;Si era igual a 39h, muestra 9
 	CPI 38h
 	JZ num8
@@ -180,53 +191,85 @@ May30:
 	JZ num2
 	CPI 31h
 	JZ num1
-OutNum:
-	OUT 17h
-	MVI A, 08h
-	LXI H, 2000h
+num0:
+	MVI A, 77h
+	RET
+num1:
+	MVI A, 44h
+	RET
+num2:
+	MVI A, 3Eh
+	RET
+num3:
+	MVI A, 6Eh
+	RET
+num4:
+	MVI A, 4Dh
+	RET
+num5:
+	MVI A, 6Bh
+	RET
+num6:
+	MVI A, 7Bh
+	RET
+num7:
+	MVI A, 46h
+	RET
+num8:
+	MVI A, 7Fh
+	RET
+num9:
+	MVI A, 4Fh
+	RET
+	
+ContarNum:
+	PUSH PSW
+	MVI A, 38h
+	LXI H, Digito1
 DigitLoop:
 	CMP M
 	JNC Incrementa
-	MVI M, 00h
+	MVI M, 30h
 	INR L
 	JMP DigitLoop
 Incrementa:
 	INR M
-	JMP Main
+	POP PSW
+	RET
 
-num0:
-	MVI A, 77h
-	JMP OutNum
-num1:
-	MVI A, 44h
-	JMP OutNum
-num2:
-	MVI A, 3Eh
-	JMP OutNum
-num3:
-	MVI A, 6Eh
-	JMP OutNum
-num4:
-	MVI A, 4Dh
-	JMP OutNum
-num5:
-	MVI A, 6Bh
-	JMP OutNum
-num6:
-	MVI A, 7Bh
-	JMP OutNum
-num7:
-	MVI A, 46h
-	JMP OutNum
-num8:
-	MVI A, 7Fh
-	JMP OutNum
-num9:
-	MVI A, 4Fh
-	JMP OutNum
-
-
-	MOV A, B
-	
+ShowCount:
+	LXI H, Digito1
+	MOV A, M
+	CALL DecodeNum
+	OUT 2Fh
+	LXI H, Digito2
+	MOV A, M
+	CALL DecodeNum
+	OUT 2Dh
+	LXI H, Digito3
+	MOV A, M
+	CALL DecodeNum
+	OUT 2Bh
+	LXI H, Digito4
+	MOV A, M
+	CALL DecodeNum
+	OUT 29h
+	LXI H, Digito5
+	MOV A, M
+	CALL DecodeNum
+	OUT 27h
+	LXI H, Digito6
+	MOV A, M
+	CALL DecodeNum
+	OUT 25h
+	LXI H, Digito7
+	MOV A, M
+	CALL DecodeNum
+	OUT 23h
+	LXI H, Digito8
+	MOV A, M
+	CALL DecodeNum
+	OUT 21h
+	RET
 	
 	HLT
