@@ -1,11 +1,11 @@
 ;********************************************************************
-;Técnicas Digitales II
+;TÃ©cnicas Digitales II
 ;Archivo Template para trabajar con el microprocesador 8085
 ;Ing. Maggiolo Gustavo
 ;********************************************************************
 
 ;********************************************************************
-;	Definición de Etiquetas
+;	DefiniciÃ³n de Etiquetas
 ;********************************************************************
 
 .define
@@ -30,25 +30,25 @@
 	
 
 ;********************************************************************
-;	Definición de Datos en RAM (Variables)
+;	DefiniciÃ³n de Datos en RAM (Variables)
 ;********************************************************************
 
 .data	IniDataRAM
 	
 p1:		dB		5
 p2:		dB		4
-p3:		dB		3
-p4:		dB		2
-p5:		dB		1
-p6:		dB		10
-p7:		dB		6
+p3:		dB		6
+p4:		dB		3
+p5:		dB		2
+p6:		dB		1
+p7:		dB		0
 p8:		dB		7
 p9:		dB		8
 p10:	dB		9
 
 	
 ;********************************************************************
-;	Definición de Datos en ROM (Constantes)
+;	DefiniciÃ³n de Datos en ROM (Constantes)
 ;********************************************************************
 
 .data	IniDataROM
@@ -98,47 +98,47 @@ Texto:		dB	'C','a','d','e','n','a',0
 ;	Sector de las Interrupciones
 ;********************************************************************
 IntRST1:
-		;Acá va el código de la Interrupción RST1
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST1
 		
 		RET
 IntRST2:
-		;Acá va el código de la Interrupción RST2
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST2
 		
 		RET
 IntRST3:
-		;Acá va el código de la Interrupción RST3
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST3
 		
 		RET
 IntRST4:
-		;Acá va el código de la Interrupción RST4
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST4
 		
 		RET
 IntTRAP:
-		;Acá va el código de la Interrupción TRAP
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n TRAP
 		
 		RET
 IntRST5:
-		;Acá va el código de la Interrupción RST5
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST5
 		
 		RET
 IntRST55:
-		;Acá va el código de la Interrupción RST5.5
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST5.5
 		
 		RET
 IntRST6:
-		;Acá va el código de la Interrupción RST6
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST6
 		
 		RET
 IntRST65:
-		;Acá va el código de la Interrupción RST6.5
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST6.5
 		
 		RET
 IntRST7:
-		;Acá va el código de la Interrupción RST7
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST7
 		
 		RET
 IntRST75:
-		;Acá va el código de la Interrupción RST7.5
+		;Acï¿½ va el cï¿½digo de la Interrupciï¿½n RST7.5
 		
 		RET
 
@@ -148,52 +148,76 @@ IntRST75:
 ;********************************************************************
 Boot:
 	LXI	SP,STACK_ADDR	;Inicializo el Puntero de Pila
-	
+	MVI C, 03h
 Main:
-	CALL MayMen
+	CALL Ordenar
 
 	HLT
 
-MayMen:
-	LXI H, p1
+Ordenar:
+	LXI H, p1		;Empiezo con la primera posiciÃ³n
 Loop1:
-	MOV A, L
-	CPI 0Ah
-	JNC Return1
-	MOV A, M
-	INR L
-	CMP M
-	JNC Loop1
-	MOV B, M
+	MOV A, L		;Muevo el byte menos significativo
+	CPI 09h			;Corroboro que no haya pasado la Ãºltima posiciÃ³n
+	JNC Return1		;Si pasa la Ãºltima posiciÃ³n significa que recorrÃ­ toda la lista sin invertir nada, entonces termina
+	MOV A, M		;De lo contrario, lee la memoria y pasa el dato al acumulador
+	INR L			;Incrementa L, avanzando la direcciÃ³n de memoria una posiciÃ³n
+	CALL CheckCriterio
+	JNC Loop1		;Si CY=0, M(x) y M(x-1) cumplen la condiciÃ³n de ordenamiento, entonces los dejo en su posiciÃ³n y paso a comparar el siguiente par
+	MOV B, M		;Si no, los invierto en las siguientes instrucciones
 	MOV M, A
 	DCR L
 	MOV M, B
-	MOV A, L
+	MOV A, L		;DespuÃ©s de invertirlos, termino con L en el acumulador indicando la posiciÃ³n anterior
 	CPI 00h
-	JZ Loop1
-	DCR L
-	JMP Loop1
+	JZ Loop1		;Si la posiciÃ³n actual es la primera, sigo comparando como si empezara de nuevo
+	DCR L			;Si no, decremento una vez mÃ¡s
+	JMP Loop1		;y vuelvo a comparar con el siguiente
 Return1:
 	RET
 
-MenMay:
-	LXI H, p1
-Loop2:
-	MOV A, L
-	CPI 0Ah
-	JNC Return2
-	MOV A, M
-	INR L
-	CMP M
-	JC Loop2
-	MOV B, M
-	MOV M, A
-	DCR L
-	MOV M, B
-	MOV A, L
+CheckCriterio:
+	MOV D, A		;Guardo uno de los datos a comparar en el registro D para usar A en otras operaciones
+	MOV A, C		;C guarda la opciÃ³n de ordenamiento
 	CPI 00h
-	JZ Loop2
-	DCR L
-	JMP Loop2
-Return2:
+	JZ Crit0
+	CPI 01h
+	JZ Crit1
+	CPI 02h
+	JZ Crit2
+	CPI 03h
+	JZ Crit3
+	RET
+Crit0:				;Mayor a menor
+	MOV A, D
+	CMP M
+	JMP RetCrit
+Crit1:				;Menor a mayor
+	MOV A, D
+	CMP M
+	CMC
+	JMP RetCrit
+Crit2:				;Par a impar
+	MOV A, M
+	RAR
+	MOV A, D
+	JNC MPar
+	CMC
+	JMP RetCrit
+MPar:
+	RAR				;No hay salto porque el estado de CY se condice con lo que debe retornar
+	MOV A, D		;Vuelvo a poner el dato en A antes de continuar
+	JMP RetCrit
+Crit3:				;Par a impar
+	MOV A, M
+	RAR
+	MOV A, D
+	JC MImpar
+	JMP RetCrit
+MImpar:
+	RAR				;No hay salto porque el estado de CY se condice con lo que debe retornar
+	CMC
+	MOV A, D		;Vuelvo a poner el dato en A antes de continuar
+	JMP RetCrit
+RetCrit:			;El criterio es: 0=Cumple / 1=NoCumple
 	RET

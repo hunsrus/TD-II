@@ -251,36 +251,28 @@ Incrementa:
 ;y los muestra en su respectivo digito
 ;*********************************************************************
 ShowCount:
-	LXI H, Digito1	;Pone la dirección del primer dígito en HL
-	MOV A, M		;Pasa el valor al acumulador
+	LDA Digito1
 	CALL DecodeNum	;Decodifica el dígito
 	OUT 2Fh			;Lo muestra en el primer dígito de derecha a izquierda
-	LXI H, Digito2  ;Repite lo anterior para el segundo dígito, etc.
-	MOV A, M
+	LDA Digito2  	;Repite lo anterior para el segundo dígito, etc.
 	CALL DecodeNum
 	OUT 2Dh
-	LXI H, Digito3
-	MOV A, M
+	LDA Digito3
 	CALL DecodeNum
 	OUT 2Bh
-	LXI H, Digito4
-	MOV A, M
+	LDA Digito4
 	CALL DecodeNum
 	OUT 29h
-	LXI H, Digito5
-	MOV A, M
+	LDA Digito5
 	CALL DecodeNum
 	OUT 27h
-	LXI H, Digito6
-	MOV A, M
+	LDA Digito6
 	CALL DecodeNum
 	OUT 25h
-	LXI H, Digito7
-	MOV A, M
+	LDA Digito7
 	CALL DecodeNum
 	OUT 23h
-	LXI H, Digito8
-	MOV A, M
+	LDA Digito8
 	CALL DecodeNum
 	OUT 21h
 	RET
