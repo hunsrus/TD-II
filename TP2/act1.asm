@@ -148,9 +148,10 @@ IntRST75:
 ;********************************************************************
 Boot:
 	LXI	SP,STACK_ADDR	;Inicializo el Puntero de Pila
-	MVI C, 03h
+	MVI C, 00h
 Main:
 	CALL Ordenar
+	CALL IiI
 
 	HLT
 
@@ -221,3 +222,32 @@ MImpar:
 	JMP RetCrit
 RetCrit:			;El criterio es: 0=Cumple / 1=NoCumple
 	RET
+
+OrdSim:				;Ordenamiento simétrico
+	MVI D, 09h		;Cantidad de veces que desplazo
+	LXI H, p10
+	MOV E, L
+LoopSim:
+	MOV L, E
+	MOV B, M
+	MOV C, D
+Desplaza:
+	DCR L
+	MOV A, M
+	INR L
+	MOV M, A
+	DCR L
+	DCR C
+	JNZ Desplaza
+	MVI A, 09h
+	SUB E
+	MOV L, A
+	MOV M, B
+	DCR E
+	DCR D
+	JZ RetSim
+	DCR D
+	JMP LoopSim
+RetSim:
+	RET
+	
