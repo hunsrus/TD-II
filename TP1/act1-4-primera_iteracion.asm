@@ -1,6 +1,6 @@
 ;********************************************************************
 ;Técnicas Digitales II
-;Archivo Template para trabajar con el microprocesador 8085
+
 ;Escobar Gabriel y Battaglia Carlo
 ;********************************************************************
 
