@@ -1,7 +1,8 @@
 ;********************************************************************
-;Técnicas Digitales II
-;Archivo Template para trabajar con el microprocesador 8085
-;Ing. Maggiolo Gustavo
+;Trabajo Práctico N°1 - Lectura de teclado y display
+;Actividad I - Lectura/Escritura de puertos
+;Puntos 1 y 2
+;Battaglia Carlo - Escobar Gabriel
 ;********************************************************************
 
 ;********************************************************************

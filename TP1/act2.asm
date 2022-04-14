@@ -35,14 +35,14 @@
 
 .data	IniDataRAM
 	
-Digito1:		dB		30h		;Inicializo las variables en 30h (0 en el display)
-Digito2:		dB		30h
-Digito3:		dB		30h
-Digito4:		dB		30h
-Digito5:		dB		30h
-Digito6:		dB		30h
-Digito7:		dB		30h
-Digito8:		dB		30h
+Digit1:		dB		30h		;Inicializo las variables en 30h (0 en el display)
+Digit2:		dB		30h
+Digit3:		dB		30h
+Digit4:		dB		30h
+Digit5:		dB		30h
+Digit6:		dB		30h
+Digit7:		dB		30h
+Digit8:		dB		30h
 
 	
 ;********************************************************************
@@ -233,46 +233,46 @@ num9:
 ;****************************************************************************
 ContarNum:
 	PUSH PSW		;Empila el acumulador para no perder el dato antes de mostrarlo
-	MVI A, 38h		;Guardo 38h (8) para chequear que los digitos lleguen solo a 9
-	LXI H, Digito1	;Comienzo a recorrer la memoria en el primer dígito
+	MVI A, 38h		;Guardo 38h (8) para chequear que los Digits lleguen solo a 9
+	LXI H, Digit1	;Comienzo a recorrer la memoria en el primer dígito
 DigitLoop:
 	CMP M			;Comparo el dígito con A (8)
-	JNC Incrementa	;Si el valor en M es menor 0 igual a 8, lo incrementa
+	JNC Increment	;Si el valor en M es menor 0 igual a 8, lo incrementa
 	MVI M, 30h		;Si es mayor a 8, reseteo el dígito poniendolo en 30h (0)
 	INR L			;Incremento L, la parte baja de la dirección almacenada en el par HL
 	JMP DigitLoop	;Repito las operaciones para el siguiente dígito hasta que pueda incrementar uno
-Incrementa:
+Increment:
 	INR M			;Incrementa el valor almacenado en la dirección que apunta el par HL después de haber modificado o no L
 	POP PSW
 	RET
 
 ;*********************************************************************
 ;Decodifica cada 8 dígitos almacenados de forma contigua en la memoria
-;y los muestra en su respectivo digito
+;y los muestra en su respectivo Digit
 ;*********************************************************************
 ShowCount:
-	LDA Digito1
+	LDA Digit1
 	CALL DecodeNum	;Decodifica el dígito
 	OUT 2Fh			;Lo muestra en el primer dígito de derecha a izquierda
-	LDA Digito2  	;Repite lo anterior para el segundo dígito, etc.
+	LDA Digit2  	;Repite lo anterior para el segundo dígito, etc.
 	CALL DecodeNum
 	OUT 2Dh
-	LDA Digito3
+	LDA Digit3
 	CALL DecodeNum
 	OUT 2Bh
-	LDA Digito4
+	LDA Digit4
 	CALL DecodeNum
 	OUT 29h
-	LDA Digito5
+	LDA Digit5
 	CALL DecodeNum
 	OUT 27h
-	LDA Digito6
+	LDA Digit6
 	CALL DecodeNum
 	OUT 25h
-	LDA Digito7
+	LDA Digit7
 	CALL DecodeNum
 	OUT 23h
-	LDA Digito8
+	LDA Digit8
 	CALL DecodeNum
 	OUT 21h
 	RET

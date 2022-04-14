@@ -1,7 +1,7 @@
 ;********************************************************************
-;Técnicas Digitales II
-;Archivo Template para trabajar con el microprocesador 8085
-;Ing. Maggiolo Gustavo
+;Trabajo Práctico N°2 - Ordenamiento de Datos
+;Actividad I
+;Battaglia Carlo - Escobar Gabriel
 ;********************************************************************
 
 ;********************************************************************
@@ -45,6 +45,7 @@ p7:		dB		0
 p8:		dB		7
 p9:		dB		8
 p10:	dB		9
+CritOriginal:	dB		0
 
 	
 ;********************************************************************
@@ -98,47 +99,47 @@ Texto:		dB	'C','a','d','e','n','a',0
 ;	Sector de las Interrupciones
 ;********************************************************************
 IntRST1:
-		;Ac� va el c�digo de la Interrupci�n RST1
+		;Acá va el código de la Interrupción RST1
 		
 		RET
 IntRST2:
-		;Ac� va el c�digo de la Interrupci�n RST2
+		;Acá va el código de la Interrupción RST2
 		
 		RET
 IntRST3:
-		;Ac� va el c�digo de la Interrupci�n RST3
+		;Acá va el código de la Interrupción RST3
 		
 		RET
 IntRST4:
-		;Ac� va el c�digo de la Interrupci�n RST4
+		;Acá va el código de la Interrupción RST4
 		
 		RET
 IntTRAP:
-		;Ac� va el c�digo de la Interrupci�n TRAP
+		;Acá va el código de la Interrupción TRAP
 		
 		RET
 IntRST5:
-		;Ac� va el c�digo de la Interrupci�n RST5
+		;Acá va el código de la Interrupción RST5
 		
 		RET
 IntRST55:
-		;Ac� va el c�digo de la Interrupci�n RST5.5
+		;Acá va el código de la Interrupción RST5.5
 		
 		RET
 IntRST6:
-		;Ac� va el c�digo de la Interrupci�n RST6
+		;Acá va el código de la Interrupción RST6
 		
 		RET
 IntRST65:
-		;Ac� va el c�digo de la Interrupci�n RST6.5
+		;Acá va el código de la Interrupción RST6.5
 		
 		RET
 IntRST7:
-		;Ac� va el c�digo de la Interrupci�n RST7
+		;Acá va el código de la Interrupción RST7
 		
 		RET
 IntRST75:
-		;Ac� va el c�digo de la Interrupci�n RST7.5
+		;Acá va el código de la Interrupción RST7.5
 		
 		RET
 
@@ -148,12 +149,25 @@ IntRST75:
 ;********************************************************************
 Boot:
 	LXI	SP,STACK_ADDR	;Inicializo el Puntero de Pila
-	MVI C, 00h
 Main:
+	IN 10h
+	CPI 00h
+	JZ Main
+	CPI 31h
+	JC Main
+	CPI 37h
+	JNC Main
+	STA CritOriginal
+	MOV C, A
 	CALL Ordenar
-	CALL IiI
+	LDA CritOriginal
+	CPI 35h
+	JZ OrdSim
+	CPI 36h
+	JZ OrdSim
+	JMP Main
 
-	HLT
+	HLT	
 
 Ordenar:
 	LXI H, p1		;Empiezo con la primera posición
@@ -180,25 +194,29 @@ Return1:
 CheckCriterio:
 	MOV D, A		;Guardo uno de los datos a comparar en el registro D para usar A en otras operaciones
 	MOV A, C		;C guarda la opción de ordenamiento
-	CPI 00h
-	JZ Crit0
-	CPI 01h
+	CPI 31h
 	JZ Crit1
-	CPI 02h
+	CPI 32h
 	JZ Crit2
-	CPI 03h
+	CPI 33h
 	JZ Crit3
+	CPI 34h
+	JZ Crit4
+	CPI 35h
+	JZ Crit5
+	CPI 36h
+	JZ Crit6
 	RET
-Crit0:				;Mayor a menor
+Crit1:				;Mayor a menor
 	MOV A, D
 	CMP M
 	JMP RetCrit
-Crit1:				;Menor a mayor
+Crit2:				;Menor a mayor
 	MOV A, D
 	CMP M
 	CMC
 	JMP RetCrit
-Crit2:				;Par a impar
+Crit3:				;Par a impar
 	MOV A, M
 	RAR
 	MOV A, D
@@ -209,7 +227,7 @@ MPar:
 	RAR				;No hay salto porque el estado de CY se condice con lo que debe retornar
 	MOV A, D		;Vuelvo a poner el dato en A antes de continuar
 	JMP RetCrit
-Crit3:				;Par a impar
+Crit4:				;Par a impar
 	MOV A, M
 	RAR
 	MOV A, D
@@ -220,6 +238,12 @@ MImpar:
 	CMC
 	MOV A, D		;Vuelvo a poner el dato en A antes de continuar
 	JMP RetCrit
+Crit5:
+	MVI C, 31h
+	RET
+Crit6:
+	MVI C, 32h
+	RET
 RetCrit:			;El criterio es: 0=Cumple / 1=NoCumple
 	RET
 

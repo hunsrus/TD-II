@@ -1,7 +1,7 @@
 ;********************************************************************
 ;Técnicas Digitales II
 ;Archivo Template para trabajar con el microprocesador 8085
-;Ing. Maggiolo Gustavo
+;Escobar Gabriel y Battaglia Carlo
 ;********************************************************************
 
 ;********************************************************************
@@ -176,12 +176,15 @@ Revertir:
 	MVI C, 00h		;Inicializo C en cero, donde voy a almacenar el dato de salida
 	MVI D, 08h		;Inicializo para contar 8 veces
 Loop:
-	RAR				;Desplazo a la deracha, dejando el bit menos significativo del dato en CY
+	RRC				;Desplazo a la deracha, dejando el bit menos significativo del dato en CY
 	MOV B, A		;Guardo el estado del dato en B
 	MOV A, C		;Paso C al acumulador para realizar operaciones
-	RAL
+	JNC Cero		;Si el bit en D0 era cero, salto el paso siguiente (Las instrucciones MOV anteriores no afectan ningún flag seteado durante RRC)
+	ADI 01h			;Si D0 era 1, pongo en 1 el bms del dato a devolver
+Cero:
 	DCR D			;Decremento D
 	JZ Return		;Si resté 8 veces, termina el algoritmo con el dato a devolver (C) en el acumulador
+	RLC				;Si no, desplazo los datos a la izquierda y continúo
 	MOV C, A		;Guardo el dato parcialmente revertido en C nuevamente
 	MOV A, B		;Vuelvo a poner la entrada en el acumulador para repetir las operaciones
 	JMP Loop
