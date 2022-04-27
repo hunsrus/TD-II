@@ -110,70 +110,54 @@ Texto:		dB	'C','a','d','e','n','a',0
 ;	Sector de las Interrupciones
 ;********************************************************************
 IntRST1:
-		;Acá va el código de la Interrupción RST1
-		
 		RET
 IntRST2:
-		;Acá va el código de la Interrupción RST2
-		
 		RET
 IntRST3:
-		;Acá va el código de la Interrupción RST3
-		
 		RET
 IntRST4:
-		;Acá va el código de la Interrupción RST4
-		
 		RET
 IntTRAP:
-		;Acá va el código de la Interrupción TRAP
-		
 		RET
 IntRST5:
-		;Acá va el código de la Interrupción RST5
-		
 		RET
 IntRST55:
 		;Interrupción cada 100[ms]
 		PUSH PSW
 		LDA cantRST55
-		INR A
-		CPI 0Ah
-		JNC noCantRST55
-		CALL SetFlagSeg
-		MVI A, 00h
+		INR A				;Cuenta la interrupcion
+		CPI 0Ah				;Comparo para ver si lleguó a 10 interrupciones (1 segundo)
+		JNC noCantRST55		;Si no llegó, no hace nada
+		CALL SetFlagSeg		;Si pasó un segundo, activo el flag de segundo
+		MVI A, 00h			;Preparo A para resetar cantRST55
 noCantRST55:
-		STA cantRST55
+		STA cantRST55		;Actualizo la cantidad de interrupciones que ocurrieron
 		POP PSW
 		EI
 		RET
+
 IntRST6:
-		;Acá va el código de la Interrupción RST6
-		
 		RET
+
 IntRST65:
 		;Interrupción de teclado
 		PUSH PSW
 		IN 20h
 		CPI 53h				;Compara con 53h ('S')
-		CZ StartCron
+		CZ StartCron		;Si se presionó S, arranca el cronómetro
 		CPI 46h				;F
-		CZ StopCron
+		CZ StopCron			;Si se presionó F, detiene el cronómetro
 		CPI 50h				;P
-		CZ ParcialCron
+		CZ ParcialCron		;Si se presionó P, toma un tiempo parcial
 		CPI 54h				;T
-		CZ ShowParcial
+		CZ ShowParcial		;Si se presionó T, recorre y muestra los tiempos parciales
 		POP PSW
 		EI
 		RET
+
 IntRST7:
-		;Acá va el código de la Interrupción RST7
-		
 		RET
-IntRST75:
-		;Acá va el código de la Interrupción RST7.5
-		
-		
+IntRST75:		
 		RET
 
 
@@ -182,28 +166,29 @@ IntRST75:
 ;********************************************************************
 Boot:
 	LXI	SP,STACK_ADDR	;Inicializo el Puntero de Pila
-	MVI A, 09h			;Seteo solo MSE y M5.5 (M5.5 arranca enmascarada y M6.5 no)
-	SIM
-	CALL ShowCron
-	MVI A, 1Fh
-	OUT 56h
-	CALL ShowParcial
-	EI
+	MVI A, 09h			;Setea solo MSE y M5.5 (M5.5 arranca enmascarada y M6.5 no)
+	SIM					;Setea máscaras
+	CALL ShowCron		;Muestra el cronómetro (en cero)
+	MVI A, 1Fh			;Código de la letra P para el display de 15 segmentos
+	OUT 56h				;Deja la letra P en el primer dígito del display constantemente
+	CALL ShowParcial	;Muestra el tiempo parcial0 (que es cero)
+	EI					;Habilita las interrupciones
 Main:
 	LDA flags
 	ANI 01h				;Chequeo si el flag seg esta en 1
-	CNZ IncCron			;Incrementa en una unidad el cronómetro
+	CNZ IncCron			;Incrementa en una unidad el cronómetro si el flag de segundos estaba en 1
 
 	JMP	Main
 	
 	HLT
 
+;Incrementa el cronómetro
 IncCron:
-	LXI H, cron+5
-	MVI A, 08h
-	CMP M
-	JNC RetIncCron
-	MVI M, 00h
+	LXI H, cron+5		;Comienza por el dígito de la unidad de segundos
+	MVI A, 08h			;Compara con su máximo
+	CMP M				;Compara el dígito con su máximo
+	JNC RetIncCron		;Si no llego al máximo, salta a incrementar
+	MVI M, 00h			;Si en cambio llegó al máximo, repite lo mismo pero para el siguiente dígito
 	DCX H
 	MVI A, 04h
 	CMP M
@@ -228,30 +213,33 @@ IncCron:
 	MVI A, 08h
 	CMP M
 	JNC RetIncCron
-	CALL ResetCron
-	LXI H, cron+5
-RetIncCron:
-	INR M
-	CALL ShowCron
-	CALL UnsetFlagSeg
+	CALL ResetCron		;Si se excedió el limite de 99:59:59, se reseta el cronometro
+	LXI H, cron+5		;Y se vuelve a la unidad de segundo
+RetIncCron:				
+	INR M				;Incrementa el dígito que se eligió anteriormente
+	CALL ShowCron		;Muestra el cronómetro actualizado
+	CALL UnsetFlagSeg	;Desactiva el flag de segundo para que RST5.5 vuelva a contar interrupciones
 	RET
 
 ;Inicia el cronómetro desenmascarando RST 5.5
 StartCron:
 	MVI A, 08h
-	SIM
-	CALL ResetParcial
+	SIM					;Desenmascara RST 5.5
+	CALL ResetParcial	;Cada vez que arranca el cronómetro borra también los tiempos parciales
 	RET
+
 ;Detiene el cronómetro enmascarando RST 5.5
 StopCron:
 	MVI A, 09h
-	SIM
-	CALL ResetCron
-	CALL ShowCron
-	MVI A, F0h
-	STA pOnDisplay
-	CALL ShowParcial
+	SIM					;Enmascara RST 5.5
+	CALL ResetCron		;Resetea el cronometro
+	CALL ShowCron		;Muestra los valores actualizados en el display
+	MVI A, F0h			;Pone un valor mayor al límite maximo de cantidad de tiempos parciales (10) por la naturaleza del funcionamiento de la función ShowParcial
+	STA pOnDisplay		;Setea el valor a mostrar fuera del rango, con el número anterior
+	CALL ShowParcial	;Muestra los valores parciales. Comenzará por el parcial0 por estar fuera de rango
 	RET
+
+;Resetea el cronómetro poniendo un 0 en cada espacio de memoria
 ResetCron:
 	MVI A, 00h
 	STA cron
@@ -261,11 +249,12 @@ ResetCron:
 	STA cron+4
 	STA cron+5
 	RET
+;Muestra los valores almacenados en el cronómetro
 ShowCron:
-	LDA cron
-	CALL DecodeNum
-	OUT 37h
-	LDA cron+1
+	LDA cron			;Comienza por la decena de la hora
+	CALL DecodeNum		;Decodifica el número almacenado
+	OUT 37h				;Lo muestra en la posición correspondiente
+	LDA cron+1			;Repite para los dígitos sucesivos
 	CALL DecodeNum
 	OUT 38h
 	LDA cron+2
@@ -281,19 +270,21 @@ ShowCron:
 	CALL DecodeNum
 	OUT 3Ch
 	RET
+
+;Guarda el valor actual del cronómetro en un tiempo parcial
 ParcialCron:
 	LDA cantParciales
 	CPI 0Ah				;Chequea si ya se guardaron 10 tiempos parciales
 	JNC RetParcialCron	;Si es así, retorna sin hacer nada
-	LXI H, parcial0		;Apunto al primer tiempo parcial
-	CPI 00h
-	JZ JumpLoop
+	LXI H, parcial0		;Apunta al primer tiempo parcial
+	CPI 00h				;Si solo hay 1 tiempo parcial (cantParciales = 0)
+	JZ JumpLoop			;En ese caso, salteo el loop que avanza en la memoria
 LoopParcialCron:
-	CALL Avanzar5		;Me muevo 1 tiempo parcial
+	CALL Avanzar5		;Me muevo 1 tiempo parcial (5 dígitos o 5 espacios de memoria)
 	DCR A				;Resto tantas veces como cantidad de tiempos parciales haya
-	JNZ LoopParcialCron
+	JNZ LoopParcialCron ;Al finalizar este loop, la memoria apuntará a la decena de la hora del tiempo parcial a guardar
 JumpLoop:
-	LDA cron
+	LDA cron			;En las siguientes líneas se copia la memoria desde cron hasta la dirección que apuntamos
 	MOV M, A
 	INX H
 	LDA cron+1
@@ -310,34 +301,35 @@ JumpLoop:
 	INX H
 	LDA cron+5
 	MOV M, A
-	LDA cantParciales
+
+	LDA cantParciales	;Se cuenta el nuevo tiempo parcial
 	INR A
 	STA cantParciales
 RetParcialCron:
 	RET
 
+;Muestra el tiempo parcial SIGUIENTE en el display de 15 segmentos
 ShowParcial:
-	LXI H, parcial0
-
+	LXI H, parcial0		;Comienza apuntando al primer tiempo parcial
 	LDA cantParciales
 	MOV B, A
 	LDA pOnDisplay
 	INR A
-	CMP B
-	MOV C, A
-	JC LoopDirec
-	MVI A, 00h
-	JMP DirecReady
+	CMP B				;Chequea que el tiempo a mostrar exista (tiempo mostrado menor a cantidad de tiempos guardados)
+	MOV C, A			
+	JC LoopDirec		;Avanza en la memoria hasta el tiempo parcial buscado
+	MVI A, 00h			;Si se pasó del último tiempo parcial, vuelve al primero
+	JMP DirecReady		;Y no se mueve en la memoria, muestra "parcial0"
 LoopDirec:
 	CALL Avanzar5
-	DCR	C
+	DCR	C				;C es la cantidad de tiempos parciales que hay que recorrer
 	JNZ LoopDirec
-DirecReady:
-	STA pOnDisplay
-	CALL DecodeNum
-	OUT 58h
+DirecReady:				;Ya se llegó a la dirección deseada
+	STA pOnDisplay		;Actualiza el identificador del tiempo mostrado
+	CALL DecodeNum		;Lo de codifica
+	OUT 58h				;Y lo muestra al lado de la letra P, indicando de qué tiempo parcial se trata
 
-	MOV A, M
+	MOV A, M			;En las siguientes lineas se decodifica el tiempo parcial guardado y se muestra en el display
 	CALL DecodeNum
 	OUT 5Ah
 	INX H
@@ -363,39 +355,42 @@ DirecReady:
 ShowParcialRet:
 	RET
 
-ResetParcial:
-	LXI H, parcial0
-	MVI A, 60
+;Resetea todos los tiempos parciales
+ResetParcial:			
+	LXI H, parcial0		;Arranca desde el primer tiempo parcial
+	MVI A, 60			;Setea A para contar 60 veces
 LoopRstPar:
-	MVI M, 00h
-	INX H
+	MVI M, 00h			;Pone en 0 el dígito apuntado por HL
+	INX H				;Se mueve al dígito siguiente
 	DCR A
-	JNZ LoopRstPar
+	JNZ LoopRstPar		;Si A llegó a 0, ya se borraron 60 dígitos
 	MVI A, 00h
-	STA cantParciales
+	STA cantParciales	;Resetea la cantidad de tiempos parciales (0)
 	RET
 
+;Decodifica un número a 7 o 15 segmentos
 DecodeNum:
-	PUSH H
-	MVI B, 09h
-	LXI H, code9
+	PUSH H				;Empila el par HL
+	MVI B, 09h			;B=9 para comparar 10 dígitos (0-9)
+	LXI H, code9		;Comienza a comparar desde el número 9
 LoopDecodeNum:
 	CMP B
-	JZ RetDecodeNum
-	DCX H
+	JZ RetDecodeNum		;Cuando encuentra el número correspondiente, salta a RetDecodeNum
+	DCX H				;Quedando en HL la dirección del número codificado
 	DCR B
-	JMP LoopDecodeNum
+	JMP LoopDecodeNum	;Mientras no se haya encontrado el número correspondiente, compara contra el siguiente
 RetDecodeNum:
-	MOV A, M
-	POP H
+	MOV A, M			;Guarda en A el valor del número ya codificado
+	POP H				;Desempila HL
 	RET
 
+;Esta función se mueve 5 lugares en la memoria (con el fin de moverse de un tiempo parcial al siguiente)
 Avanzar5:
 	PUSH PSW
 	PUSH B
 	MVI B, 06h
 LoopAvanzar5:
-	INX H
+	INX H				;Avanza el puntero HL 5 veces
 	DCR B
 	JNZ LoopAvanzar5
 	POP B
