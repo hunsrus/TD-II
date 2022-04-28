@@ -21,10 +21,10 @@
 	AddrIntRST7		0038h
 	AddrIntRST75	003Ch
 
-	STACK_ADDR		FFFFh
+	STACK_ADDR		23FFh
 
 	IniDataROM		0540h		;Comienzo de Constantes en ROM
-	IniDataRAM		2000h		;Comienzo de Variables en RAM
+	IniDataRAM		0800h		;Comienzo de Variables en RAM
 
 	
 
