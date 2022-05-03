@@ -1,0 +1,7 @@
+{
+    "board": "arduino:avr:uno",
+    "programmer": "arduino:avrispmkii",
+    "port": "/dev/ttyUSB0",
+    "sketch": "TP4/lucesysonidos/lucesysonidos.ino",
+    "output": "TP4/build"
+}
