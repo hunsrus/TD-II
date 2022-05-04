@@ -1,14 +1,18 @@
 # 1 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
 # 2 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino" 2
-# 55 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
+# 56 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
 int pinBuz = 11;
 int pinBtn = 8;
 int pinLED[] = {0,1,2,3,4,5,6,7};
-int *melodia;
-int notas;
+int *melodia, cantNotas, nota = 0;
 int cantEstados[7] = {17,14,8,8,8,0,0};
 int btnCount, state, pulsado = 0;
-unsigned long t1, elapsed = 0;
+unsigned long t1 = 0, elapsed = 0;
+bool mode = 0, finMelodia = 0, reset = 0;
+
+int divider = 0, noteDuration = 0;
+//duración de una nota completa
+int wholenote = (60000 * 4) / 140;
 
 int secuencia[7][17][8] = {
   {
@@ -127,44 +131,91 @@ int lcdtmAllBoys[] = {
 };
 
 void setup() {
+  pinMode(13, 0x1);
   pinMode(pinBuz, 0x1);
   pinMode(pinBtn, 0x1);
   for(int i = 0; i < 7; i++)
     pinMode(pinLED[i], 0x1);
-  melodia = felizcumple;
-  notas = sizeof(felizcumple) / sizeof(int) / 2;
   btnCount = 11;
   state = 0;
 }
 
 void loop() {
-  if(!digitalRead(pinBtn)) t1 = millis();
-  else elapsed = millis() - t1;
-  if(elapsed > 100)
-  {
-    if(elapsed > 1000) btnCount = 11;
-    else{
-      if(btnCount >= 10) btnCount = 0;
-      else btnCount++;
+  if(mode){
+    if(!digitalRead(pinBtn)) t1 = millis();
+    else elapsed = millis() - t1;
+    if(elapsed > 100)
+    {
+      if(elapsed > 1000) btnCount = 11;
+      else{
+        if(btnCount >= 10) btnCount = 0;
+        else btnCount++;
+      }
+      elapsed = 0;
     }
-    elapsed = 0;
+    if(btnCount < 8)
+    {
+      for(int i = 0; i < 8; i++)
+        digitalWrite(pinLED[i],secuencia[btnCount][state][i]);
+      if(state >= cantEstados[btnCount]-1) state = 0;
+      else state++;
+    }else if(btnCount < 11)
+    {
+      int secMemPos = (btnCount-8)*(20+1);
+      int cantEstadosMem = EEPROM.read(secMemPos);
+      for(int i = 0; i < 8; i++)
+        digitalWrite(pinLED[i], (((EEPROM.read(secMemPos+state+1)) >> (i)) & 0x01));
+      if(state >= cantEstadosMem-1) state = 0;
+      else state++;
+    }else
+    {
+      for(int i = 0; i < 8; i++) digitalWrite(pinLED[i], 0x0);
+      digitalWrite(13, !digitalRead(13));
+    }
+    delay(200);
+  }else
+  {
+    if(antiRebote(pinBtn))
+    {
+      t1 = millis();
+      while((millis() - t1) < 1000)
+      {
+        if(antiRebote(pinBtn))
+          reset = true;
+      }
+      if(!reset)
+      {
+        if(btnCount < 2) btnCount++;
+        else btnCount = 0;
+      }else
+      {
+        reset = false;
+        btnCount = 3;
+      }
+      nota = 0;
+    }
+    switch (btnCount)
+    {
+    case 0:
+      cantNotas = sizeof(felizcumple) / sizeof(int) / 2;
+      finMelodia = reproducir(felizcumple,nota);
+      break;
+    case 1:
+      cantNotas = sizeof(takeonme) / sizeof(int) / 2;
+      finMelodia = reproducir(takeonme,nota);
+      break;
+    case 2:
+      cantNotas = sizeof(lcdtmAllBoys) / sizeof(int) / 2;
+      finMelodia = reproducir(lcdtmAllBoys,nota);
+      break;
+    default:
+      digitalWrite(13, !digitalRead(13));
+      delay(100);
+      break;
+    }
+    if(!finMelodia) nota = nota+2;
+    else nota = 0;
   }
-  if(btnCount < 8)
-  {
-    for(int i = 0; i < 8; i++)
-      digitalWrite(pinLED[i],secuencia[btnCount][state][i]);
-    if(state >= cantEstados[btnCount]-1) state = 0;
-    else state++;
-  }else if(btnCount < 11)
-  {
-    int secMemPos = (btnCount-8)*(20+1);
-    int cantEstadosMem = EEPROM.read(secMemPos);
-    for(int i = 0; i < 8; i++)
-      digitalWrite(pinLED[i], (((EEPROM.read(secMemPos+state+1)) >> (i)) & 0x01));
-    if(state >= cantEstadosMem-1) state = 0;
-    else state++;
-  }else for(int i = 0; i < 8; i++) digitalWrite(pinLED[i], 0x0);
-  delay(200);
 }
 
 bool antiRebote(int in)
@@ -180,38 +231,26 @@ bool antiRebote(int in)
   return ret;
 }
 
-// change this to make the song slower or faster
-int tempo = 140;
-
-// this calculates the duration of a whole note in ms
-int wholenote = (60000 * 4) / tempo;
-
-int divider = 0, noteDuration = 0;
-
-void reproducir()
+bool reproducir(int melodia[], int nota)
 {
-  // iterate over the notes of the melody.
-  // Remember, the array is twice the number of notes (notes + durations)
-  for (int thisNote = 0; thisNote < notas * 2; thisNote = thisNote + 2) {
+  // el vector de la canción tiene un largo de 2*notas, porque guarda la duracion correspondiente
+  if(nota < cantNotas * 2) {
 
-    // calculates the duration of each note
-    divider = melodia[thisNote + 1];
+    // calcula la duración de la nota
+    divider = melodia[nota + 1];
     if (divider > 0) {
-      // regular note, just proceed
       noteDuration = (wholenote) / divider;
     } else if (divider < 0) {
-      // dotted notes are represented with negative durations!!
+      // las notas prolongadas más de un tiempo se representan con número negativos
       noteDuration = (wholenote) / ((divider)>0?(divider):-(divider));
-      noteDuration *= 1.5; // increases the duration in half for dotted notes
+      noteDuration *= 1.5; // incrementa la duración por la mitad
     }
-
-    // we only play the note for 90% of the duration, leaving 10% as a pause
-    tone(pinBuz, melodia[thisNote], noteDuration * 0.9);
-
-    // Wait for the specief duration before playing the next note.
+    // suena la nota el 90% del tiempo estipulado y el resto es una pequeña pausa entre notas
+    tone(pinBuz, melodia[nota], noteDuration * 0.9);
+    // espera el tiempo que dura la nota
     delay(noteDuration);
-
-    // stop the waveform generation before the next note.
+    // detiene la nota antes de la siguiente
     noTone(pinBuz);
-  }
+    return false;
+  }else return true;
 }
