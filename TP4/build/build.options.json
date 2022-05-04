@@ -1,5 +1,5 @@
 {
-  "additionalFiles": "",
+  "additionalFiles": "..",
   "builtInLibrariesFolders": "/home/gabriel/Descargas/arduino-1.8.19-linux64/arduino-1.8.19/libraries",
   "builtInToolsFolders": "/home/gabriel/Descargas/arduino-1.8.19-linux64/arduino-1.8.19/tools-builder,/home/gabriel/Descargas/arduino-1.8.19-linux64/arduino-1.8.19/hardware/tools/avr,/home/gabriel/.arduino15/packages",
   "compiler.optimization_flags": "",
