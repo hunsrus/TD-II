@@ -1,18 +1,7 @@
 #include <Arduino.h>
 #line 1 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
-#define NOTE_B0  31
-#define NOTE_C1  33
-#define NOTE_CS1 35
-#define NOTE_D1  37
-#define NOTE_DS1 39
-#define NOTE_E1  41
-#define NOTE_F1  44
-#define NOTE_FS1 46
-#define NOTE_G1  49
-#define NOTE_GS1 52
-#define NOTE_A1  55
-#define NOTE_AS1 58
-#define NOTE_B1  62
+#include <EEPROM.h>
+
 #define NOTE_C2  65
 #define NOTE_CS2 69
 #define NOTE_D2  73
@@ -61,43 +50,18 @@
 #define NOTE_A5  880
 #define NOTE_AS5 932
 #define NOTE_B5  988
-#define NOTE_C6  1047
-#define NOTE_CS6 1109
-#define NOTE_D6  1175
-#define NOTE_DS6 1245
-#define NOTE_E6  1319
-#define NOTE_F6  1397
-#define NOTE_FS6 1480
-#define NOTE_G6  1568
-#define NOTE_GS6 1661
-#define NOTE_A6  1760
-#define NOTE_AS6 1865
-#define NOTE_B6  1976
-#define NOTE_C7  2093
-#define NOTE_CS7 2217
-#define NOTE_D7  2349
-#define NOTE_DS7 2489
-#define NOTE_E7  2637
-#define NOTE_F7  2794
-#define NOTE_FS7 2960
-#define NOTE_G7  3136
-#define NOTE_GS7 3322
-#define NOTE_A7  3520
-#define NOTE_AS7 3729
-#define NOTE_B7  3951
-#define NOTE_C8  4186
-#define NOTE_CS8 4435
-#define NOTE_D8  4699
-#define NOTE_DS8 4978
 #define NOTE_D2ST      0
 #define REST      0
-#define MAX_ESTADOS 10
+#define MAX_ESTADOS 17
+#define CANT_SEC    10
 int pinBuz = 11;
 int pinBtn = 8;
 int pinLED[] = {0,1,2,3,4,5,6,7};
 int *melodia;
 int notas;
-int cantEstados[10] = {9,8,0,0,0,0,0,0,0,0};
+int cantEstados[7] = {17,14,8,8,8,0,0};
+int btnCount, state, pulsado = 0;
+unsigned long t1, elapsed = 0;
 
 int secuencia[7][MAX_ESTADOS][8] = {
   {
@@ -109,7 +73,15 @@ int secuencia[7][MAX_ESTADOS][8] = {
     {0,0,0,1,1,1,1,1},
     {0,0,1,1,1,1,1,1},
     {0,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1} 
+    {1,1,1,1,1,1,1,1}, 
+    {0,1,1,1,1,1,1,1},
+    {0,0,1,1,1,1,1,1},
+    {0,0,0,1,1,1,1,1},
+    {0,0,0,0,1,1,1,1},
+    {0,0,0,0,0,1,1,1},
+    {0,0,0,0,0,1,1,1},
+    {0,0,0,0,0,0,1,1},
+    {0,0,0,0,0,0,0,1} 
   },
   {
     {1,0,0,0,0,0,0,0},
@@ -119,16 +91,43 @@ int secuencia[7][MAX_ESTADOS][8] = {
     {0,0,0,0,1,0,0,0},
     {0,0,0,0,0,1,0,0},
     {0,0,0,0,0,0,1,0},
-    {0,0,0,0,0,0,0,1}
+    {0,0,0,0,0,0,0,1},
+    {0,0,0,0,0,0,1,0},
+    {0,0,0,0,0,1,0,0},
+    {0,0,0,0,1,0,0,0},
+    {0,0,0,1,0,0,0,0},
+    {0,0,1,0,0,0,0,0},
+    {0,1,0,0,0,0,0,0},
   },
   {
-    {0}
+    {1,0,0,0,0,0,0,1},
+    {0,1,0,0,0,0,1,0},
+    {0,0,1,0,0,1,0,0},
+    {0,0,0,1,1,0,0,0},
+    {0,0,0,1,1,0,0,0},
+    {0,0,1,0,0,1,0,0},
+    {0,1,0,0,0,0,1,0},
+    {1,0,0,0,0,0,0,1}
   },
   {
-    {0}
+    {0,0,0,0,0,0,0,0},
+    {0,0,0,1,1,0,0,0},
+    {0,0,1,1,1,1,0,0},
+    {0,1,1,1,1,1,1,0},
+    {1,1,1,1,1,1,1,1},
+    {0,1,1,1,1,1,1,0},
+    {0,0,1,1,1,1,0,0},
+    {0,0,0,1,1,0,0,0}
   },
   {
-    {0}
+    {0,0,0,0,0,0,0,0},
+    {0,0,0,1,1,0,0,0},
+    {0,0,1,1,1,1,0,0},
+    {0,1,1,1,1,1,1,0},
+    {1,1,1,1,1,1,1,1},
+    {1,1,1,0,0,1,1,1},
+    {1,1,0,0,0,0,1,1},
+    {1,0,0,0,0,0,0,1}
   },
   {
     {0}
@@ -179,21 +178,68 @@ int lcdtmAllBoys[] = {
   NOTE_D4,8, NOTE_C4,8, NOTE_B4,4, NOTE_A3,8, NOTE_GS3,4, NOTE_GS3,8,
   NOTE_GS3,8, NOTE_GS3,8, NOTE_A3,4, NOTE_B4,8, NOTE_A3,4, REST,3,
 };
+
 #line 180 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
 void setup();
-#line 198 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
+#line 191 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
 void loop();
-#line 210 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
+#line 221 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
+bool antiRebote(int in);
+#line 242 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
 void reproducir();
 #line 180 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
 void setup() {
-  int i;
   pinMode(pinBuz, OUTPUT);
   pinMode(pinBtn, OUTPUT);
-  for(i = 0; i < 7; i++)
+  for(int i = 0; i < 7; i++)
     pinMode(pinLED[i], OUTPUT);
   melodia = felizcumple;
   notas = sizeof(felizcumple) / sizeof(int) / 2;
+  btnCount = 11;
+  state = 0;
+}
+
+void loop() {
+  if(!digitalRead(pinBtn)) t1 = millis();
+  else elapsed = millis() - t1;
+  if(elapsed > 100)
+  {
+    if(elapsed > 1000) btnCount = 11;
+    else{
+      if(btnCount >= CANT_SEC) btnCount = 0;
+      else btnCount++;
+    }
+    elapsed = 0;
+  }
+  if(btnCount < 8)
+  {
+    for(int i = 0; i < 8; i++)
+      digitalWrite(pinLED[i],secuencia[btnCount][state][i]);
+    if(state >= cantEstados[btnCount]-1) state = 0;
+    else state++;
+  }else if(btnCount < 11)
+  {
+    int secMemPos = (btnCount-8)*(20+1);
+    int cantEstadosMem = EEPROM.read(secMemPos);
+    for(int i = 0; i < 8; i++)
+      digitalWrite(pinLED[i], bitRead(EEPROM.read(secMemPos+state+1), i));
+    if(state >= cantEstadosMem-1) state = 0;
+    else state++;
+  }else for(int i = 0; i < 8; i++) digitalWrite(pinLED[i], LOW);
+  delay(200);
+}
+
+bool antiRebote(int in)
+{
+  bool ret = false;
+  if(digitalRead(in) == 0)
+    pulsado = 1;
+  if(pulsado && digitalRead(in))
+  {
+    ret = true;
+    pulsado = 0;
+  }
+  return ret;
 }
 
 // change this to make the song slower or faster
@@ -203,18 +249,6 @@ int tempo = 140;
 int wholenote = (60000 * 4) / tempo;
 
 int divider = 0, noteDuration = 0;
-
-void loop() {
-  for(int i = 0; i < 7; i++)
-  {
-    for(int j = 0; j < cantEstados[i]; j++)
-    {
-        for(int k = 0; k < 8; k++)
-          digitalWrite(pinLED[k],secuencia[i][j][k]);
-        delay(100);
-    }
-  }
-}
 
 void reproducir()
 {

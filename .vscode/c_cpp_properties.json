@@ -18,6 +18,7 @@
             "includePath": [
                 "/home/gabriel/Descargas/arduino-1.8.19-linux64/arduino-1.8.19/hardware/arduino/avr/cores/arduino",
                 "/home/gabriel/Descargas/arduino-1.8.19-linux64/arduino-1.8.19/hardware/arduino/avr/variants/standard",
+                "/home/gabriel/Descargas/arduino-1.8.19-linux64/arduino-1.8.19/hardware/arduino/avr/libraries/EEPROM/src",
                 "/home/gabriel/Descargas/arduino-1.8.19-linux64/arduino-1.8.19/hardware/tools/avr/lib/gcc/avr/7.3.0/include",
                 "/home/gabriel/Descargas/arduino-1.8.19-linux64/arduino-1.8.19/hardware/tools/avr/lib/gcc/avr/7.3.0/include-fixed",
                 "/home/gabriel/Descargas/arduino-1.8.19-linux64/arduino-1.8.19/hardware/tools/avr/avr/include"
