@@ -91,13 +91,69 @@
 #define NOTE_DS8 4978
 #define NOTE_D2ST      0
 #define REST      0
-int pinBuzzer = 11;
+#define MAX_ESTADOS 10
+int pinBuz = 11;
+int pinBtn = 8;
+int pinLED[] = {0,1,2,3,4,5,6,7};
+int *melodia;
+int notas;
+int cantEstados[10] = {9,8,0,0,0,0,0,0,0,0};
+
+int secuencia[7][MAX_ESTADOS][8] = {
+                                      {
+                                        {0,0,0,0,0,0,0,0},
+                                        {0,0,0,0,0,0,0,1},
+                                        {0,0,0,0,0,0,1,1},
+                                        {0,0,0,0,0,1,1,1},
+                                        {0,0,0,0,1,1,1,1},
+                                        {0,0,0,1,1,1,1,1},
+                                        {0,0,1,1,1,1,1,1},
+                                        {0,1,1,1,1,1,1,1},
+                                        {1,1,1,1,1,1,1,1} 
+                                      },
+                                      {
+                                        {1,0,0,0,0,0,0,0},
+                                        {0,1,0,0,0,0,0,0},
+                                        {0,0,1,0,0,0,0,0},
+                                        {0,0,0,1,0,0,0,0},
+                                        {0,0,0,0,1,0,0,0},
+                                        {0,0,0,0,0,1,0,0},
+                                        {0,0,0,0,0,0,1,0},
+                                        {0,0,0,0,0,0,0,1}
+                                      },
+                                      {
+                                        {0}
+                                      },
+                                      {
+                                        {0}
+                                      },
+                                      {
+                                        {0}
+                                      },
+                                      {
+                                        {0}
+                                      },
+                                      {
+                                        {0}
+                                      },
+                                    };
+
+int felizcumple[] = {
+
+  NOTE_C4,4, NOTE_C4,8, 
+  NOTE_D4,-4, NOTE_C4,-4, NOTE_F4,-4,
+  NOTE_E4,-2, NOTE_C4,4, NOTE_C4,8, 
+  NOTE_D4,-4, NOTE_C4,-4, NOTE_G4,-4,
+  NOTE_F4,-2, NOTE_C4,4, NOTE_C4,8,
+
+  NOTE_C5,-4, NOTE_A4,-4, NOTE_F4,-4, 
+  NOTE_E4,-4, NOTE_D4,-4, NOTE_AS4,4, NOTE_AS4,8,
+  NOTE_A4,-4, NOTE_F4,-4, NOTE_G4,-4,
+  NOTE_F4,-2,
+ 
+};
 
 int takeonme[] = {
-
-  // Take on me, by A-ha
-  // Score available at https://musescore.com/user/27103612/scores/4834399
-  // Arranged by Edward Truong
 
   NOTE_FS5,8, NOTE_FS5,8,NOTE_D5,8, NOTE_B4,8, REST,8, NOTE_B4,8, REST,8, NOTE_E5,8, 
   REST,8, NOTE_E5,8, REST,8, NOTE_E5,8, NOTE_GS5,8, NOTE_GS5,8, NOTE_A5,8, NOTE_B5,8,
@@ -123,17 +179,22 @@ int lcdtmAllBoys[] = {
   NOTE_D4,8, NOTE_C4,8, NOTE_B4,4, NOTE_A3,8, NOTE_GS3,4, NOTE_GS3,8,
   NOTE_GS3,8, NOTE_GS3,8, NOTE_A3,4, NOTE_B4,8, NOTE_A3,4, REST,3,
 };
-
-#line 125 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
+#line 180 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
 void setup();
-#line 139 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
+#line 198 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
 void loop();
-#line 125 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
+#line 210 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
+void reproducir();
+#line 180 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
 void setup() {
-  pinMode(pinBuzzer, OUTPUT);
+  int i;
+  pinMode(pinBuz, OUTPUT);
+  pinMode(pinBtn, OUTPUT);
+  for(i = 0; i < 7; i++)
+    pinMode(pinLED[i], OUTPUT);
+  melodia = felizcumple;
+  notas = sizeof(felizcumple) / sizeof(int) / 2;
 }
-
-int notes = sizeof(takeonme) / sizeof(takeonme[0]) / 2;
 
 // change this to make the song slower or faster
 int tempo = 140;
@@ -144,12 +205,25 @@ int wholenote = (60000 * 4) / tempo;
 int divider = 0, noteDuration = 0;
 
 void loop() {
+  for(int i = 0; i < 7; i++)
+  {
+    for(int j = 0; j < cantEstados[i]; j++)
+    {
+        for(int k = 0; k < 8; k++)
+          digitalWrite(pinLED[k],secuencia[i][j][k]);
+        delay(100);
+    }
+  }
+}
+
+void reproducir()
+{
   // iterate over the notes of the melody.
   // Remember, the array is twice the number of notes (notes + durations)
-  for (int thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
+  for (int thisNote = 0; thisNote < notas * 2; thisNote = thisNote + 2) {
 
     // calculates the duration of each note
-    divider = lcdtmAllBoys[thisNote + 1];
+    divider = melodia[thisNote + 1];
     if (divider > 0) {
       // regular note, just proceed
       noteDuration = (wholenote) / divider;
@@ -160,14 +234,13 @@ void loop() {
     }
 
     // we only play the note for 90% of the duration, leaving 10% as a pause
-    tone(pinBuzzer, lcdtmAllBoys[thisNote], noteDuration * 0.9);
+    tone(pinBuz, melodia[thisNote], noteDuration * 0.9);
 
     // Wait for the specief duration before playing the next note.
     delay(noteDuration);
 
     // stop the waveform generation before the next note.
-    noTone(pinBuzzer);
+    noTone(pinBuz);
   }
-
 }
 
