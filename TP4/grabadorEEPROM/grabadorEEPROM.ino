@@ -1,5 +1,5 @@
 #include <EEPROM.h>
-#define MAX_ESTADOS 17
+#define MAX_ESTADOS 11
 
 void setup()
 {
