@@ -3,11 +3,10 @@
 
 #define MAX_ESTADOS 11
 #define CANT_SEC    10
-#define TEMPO       140
 #define PIN_SLIDER  10
 #define PIN_BUZZER  11
 #define PIN_BUTTON  8
-#define WHOLE_NOTE  ((60000 * 4) / TEMPO) //duración de una nota completa
+
 int pinLED[] = {0,1,2,3,4,5,6,7};
 int cantNotas, nota = 0;
 int cantEstados[7] = {9,9,8,8,8,11,11};

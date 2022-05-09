@@ -92,4 +92,7 @@
 #define NOTA_DS8 4978
 #define REST      0
 
+#define TEMPO       140
+#define WHOLE_NOTE  ((60000 * 4) / TEMPO) //duración de una nota completa
+
 #endif

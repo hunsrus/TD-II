@@ -5,11 +5,10 @@
 
 #define MAX_ESTADOS 11
 #define CANT_SEC    10
-#define TEMPO       140
 #define PIN_SLIDER  10
 #define PIN_BUZZER  11
 #define PIN_BUTTON  8
-#define WHOLE_NOTE  ((60000 * 4) / TEMPO) //duración de una nota completa
+
 int pinLED[] = {0,1,2,3,4,5,6,7};
 int cantNotas, nota = 0;
 int cantEstados[7] = {9,9,8,8,8,11,11};
@@ -143,15 +142,15 @@ int takeonme[] = {
   
 };
 
-#line 144 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
+#line 143 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
 void setup();
-#line 154 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
+#line 153 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
 void loop();
-#line 233 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
+#line 232 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
 bool antiRebote(int in);
-#line 246 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
+#line 245 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
 bool reproducir(int melodia[], int nota);
-#line 144 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
+#line 143 "/media/gabriel/DATOS/Facultad/Ingeniería Electrónica/4/Técnicas Digitales II/Trabajos prácticos/TP4/lucesysonidos/lucesysonidos.ino"
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(PIN_BUZZER, OUTPUT);
