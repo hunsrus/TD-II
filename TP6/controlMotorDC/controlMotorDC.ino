@@ -36,7 +36,7 @@ void loop()
 {
     if(state == M_RUNNING)
     {
-        if(millis() - coolDown > COOLDOWN_MS)
+        if((millis() - coolDown > COOLDOWN_MS) && (mode == M_MANUAL))
         {
             if(digitalRead(pinVelUp)) motorVelUp();
             else if(digitalRead(pinVelDown)) motorVelDown();
@@ -83,15 +83,15 @@ void serialEvent()
 {
     while (Serial.available())
     {
-        char inChar = (char)Serial.read();
-        char code;
+        char code, inChar = (char)Serial.read();
+        float velPercent;
         String ret = "$TD2,OK*";
         inputString += inChar;
         if (inChar == '\n')
         {
-            if(inputString.substring(0,4).equals("$TD2,"))
+            code = inputString.charAt(5);
+            if(inputString.substring(0,5).equals("$TD2,") && (inputString.length() <= 12) && inputString.endsWith("*\n") && (code == 'a' || code == 'b' || mode == M_REMOTE))
             {
-                code = inputString.charAt(5);
                 switch (code)
                 {
                     case 'a':
@@ -116,14 +116,14 @@ void serialEvent()
                         motorVelDown();
                     break;
                     case 'g':
-                        float velPercent = inputString.substring(7,inputString.indexOf('*')-1).toFloat();
+                        velPercent = inputString.substring(7,inputString.indexOf('*')).toFloat();
                         if(!setMotorVel(velPercent)) ret = "$TD2,Err*";
                     break;
                     default:
                         ret = "$TD2,Err*";
                     break;
                 }
-            }
+            }else ret = "$TD2,Err*";
             Serial.println(ret);
             inputString = "";
         }
