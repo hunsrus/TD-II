@@ -90,7 +90,7 @@ void serialEvent()
         if (inChar == '\n')
         {
             code = inputString.charAt(5);
-            if(inputString.substring(0,5).equals("$TD2,") && (inputString.length() <= 12) && inputString.endsWith("*\n") && (code == 'a' || code == 'b' || mode == M_REMOTE))
+            if(inputString.substring(0,5).equals("$TD2,") && (inputString.length() <= 12) && inputString.endsWith("*\n") && (code == 'a' || mode == M_REMOTE))
             {
                 switch (code)
                 {
