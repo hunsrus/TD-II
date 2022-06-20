@@ -1,7 +1,8 @@
 ;********************************************************************
 ;Técnicas Digitales II
-;Archivo Template para trabajar con el microprocesador 8085
-;Ing. Maggiolo Gustavo
+;Práctica de parcial I - 2021 - Ejercicio 2
+;RUP que ordene, de mayor a menor, 100 datos almacenados a partir de
+;la dirección 400h
 ;********************************************************************
 
 ;********************************************************************
