@@ -1,11 +1,11 @@
 ;********************************************************************
-;TÈcnicas Digitales II
+;T√©cnicas Digitales II
 ;Archivo Template para trabajar con el microprocesador 8085
 ;Ing. Maggiolo Gustavo
 ;********************************************************************
 
 ;********************************************************************
-;	DefiniciÛn de Etiquetas
+;	Definici√≥n de Etiquetas
 ;********************************************************************
 
 .define
@@ -30,7 +30,7 @@
 	
 
 ;********************************************************************
-;	DefiniciÛn de Datos en RAM (Variables)
+;	Definici√≥n de Datos en RAM (Variables)
 ;********************************************************************
 
 .data	IniDataRAM
@@ -42,7 +42,7 @@ Variable4:		dB		0
 
 	
 ;********************************************************************
-;	DefiniciÛn de Datos en ROM (Constantes)
+;	Definici√≥n de Datos en ROM (Constantes)
 ;********************************************************************
 
 .data	IniDataROM
@@ -92,47 +92,47 @@ Texto:		dB	'C','a','d','e','n','a',0
 ;	Sector de las Interrupciones
 ;********************************************************************
 IntRST1:
-		;Ac· va el cÛdigo de la InterrupciÛn RST1
+		;Ac√° va el c√≥digo de la Interrupci√≥n RST1
 		
 		RET
 IntRST2:
-		;Ac· va el cÛdigo de la InterrupciÛn RST2
+		;Ac√° va el c√≥digo de la Interrupci√≥n RST2
 		
 		RET
 IntRST3:
-		;Ac· va el cÛdigo de la InterrupciÛn RST3
+		;Ac√° va el c√≥digo de la Interrupci√≥n RST3
 		
 		RET
 IntRST4:
-		;Ac· va el cÛdigo de la InterrupciÛn RST4
+		;Ac√° va el c√≥digo de la Interrupci√≥n RST4
 		
 		RET
 IntTRAP:
-		;Ac· va el cÛdigo de la InterrupciÛn TRAP
+		;Ac√° va el c√≥digo de la Interrupci√≥n TRAP
 		
 		RET
 IntRST5:
-		;Ac· va el cÛdigo de la InterrupciÛn RST5
+		;Ac√° va el c√≥digo de la Interrupci√≥n RST5
 		
 		RET
 IntRST55:
-		;Ac· va el cÛdigo de la InterrupciÛn RST5.5
+		;Ac√° va el c√≥digo de la Interrupci√≥n RST5.5
 		
 		RET
 IntRST6:
-		;Ac· va el cÛdigo de la InterrupciÛn RST6
+		;Ac√° va el c√≥digo de la Interrupci√≥n RST6
 		
 		RET
 IntRST65:
-		;Ac· va el cÛdigo de la InterrupciÛn RST6.5
+		;Ac√° va el c√≥digo de la Interrupci√≥n RST6.5
 		
 		RET
 IntRST7:
-		;Ac· va el cÛdigo de la InterrupciÛn RST7
+		;Ac√° va el c√≥digo de la Interrupci√≥n RST7
 		
 		RET
 IntRST75:
-		;Ac· va el cÛdigo de la InterrupciÛn RST7.5
+		;Ac√° va el c√≥digo de la Interrupci√≥n RST7.5
 		
 		RET
 
