@@ -37,7 +37,7 @@ n1:             dB      A0h
 n2:             dB      B2h
 n3:             dB      3
 n4:             dB      4
-n5:             dB      5
+n5:             dB      FEh
 n6:             dB      EFh
 n7:             dB      7
 n8:             dB      8
@@ -65,10 +65,10 @@ PYM:
 	LXI H, 2000h
 Loop:
     MOV A, M
-    ANI 01h
-    JNZ Next
     CPI A1h
     JC Next
+    ANI 01h
+    JNZ Next
     INR B
 
 Next:
