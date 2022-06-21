@@ -1,8 +1,8 @@
 ;********************************************************************
 ;Técnicas Digitales II
 ;Práctica de parcial I - 2021 - Ejercicio 2
-;RUP que ordene, de mayor a menor, 100 datos almacenados a partir de
-;la dirección 400h
+;RUP que sobre un banco de 200 datos ubicados a partir de 2000H
+;cuente en 1FFEh cuantos son pares y mayores de A0H.
 ;********************************************************************
 
 ;********************************************************************
@@ -61,11 +61,11 @@ Boot:
 	
 PYM:
     MVI C, C8h
-    MVI B, 0h
+    MVI B, 00h
 	LXI H, 2000h
 Loop:
     MOV A, M
-    ANI 1h
+    ANI 01h
     JNZ Next
     CPI A1h
     JC Next
