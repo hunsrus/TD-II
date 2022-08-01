@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/apps/appsavr/!svn/ver/15008/avr205_frequency_measurement/trunk/source
+END
+c_template.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/apps/appsavr/!svn/ver/13032/avr205_frequency_measurement/trunk/source/c_template.h
+END
+license.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/apps/appsavr/!svn/ver/13032/avr205_frequency_measurement/trunk/source/license.h
+END
+c_template.c
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/apps/appsavr/!svn/ver/13032/avr205_frequency_measurement/trunk/source/c_template.c
+END

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/apps/appsavr/!svn/ver/14101/avr205_frequency_measurement/trunk/source/Freq_cntr_GCC/avr205_frequency_measure_interrupt
+END
+freq_meter.h
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/apps/appsavr/!svn/ver/13588/avr205_frequency_measurement/trunk/source/Freq_cntr_GCC/avr205_frequency_measure_interrupt/freq_meter.h
+END
+avr205_frequency_meter_interrupts_config
+K 25
+svn:wc:ra_dav:version-url
+V 160
+/apps/appsavr/!svn/ver/13588/avr205_frequency_measurement/trunk/source/Freq_cntr_GCC/avr205_frequency_measure_interrupt/avr205_frequency_meter_interrupts_config
+END
+avr205_frequency_measure_interrupts.aps
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/apps/appsavr/!svn/ver/14099/avr205_frequency_measurement/trunk/source/Freq_cntr_GCC/avr205_frequency_measure_interrupt/avr205_frequency_measure_interrupts.aps
+END
+avr205_frequency_measure_interrupts.aws
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/apps/appsavr/!svn/ver/14101/avr205_frequency_measurement/trunk/source/Freq_cntr_GCC/avr205_frequency_measure_interrupt/avr205_frequency_measure_interrupts.aws
+END
+freq_meter.c
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/apps/appsavr/!svn/ver/13596/avr205_frequency_measurement/trunk/source/Freq_cntr_GCC/avr205_frequency_measure_interrupt/freq_meter.c
+END
+avr205_frequency_measure_interrupt.c
+K 25
+svn:wc:ra_dav:version-url
+V 156
+/apps/appsavr/!svn/ver/14098/avr205_frequency_measurement/trunk/source/Freq_cntr_GCC/avr205_frequency_measure_interrupt/avr205_frequency_measure_interrupt.c
+END

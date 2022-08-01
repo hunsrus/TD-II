@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/apps/appsavr/!svn/ver/15008/avr205_frequency_measurement/trunk/source/Freq_cntr_GCC/avr205_frequency_measure_busy_wait
+END
+freq_meter.h
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/apps/appsavr/!svn/ver/14096/avr205_frequency_measurement/trunk/source/Freq_cntr_GCC/avr205_frequency_measure_busy_wait/freq_meter.h
+END
+avr205_frequency_meter_busy_wait.aps
+K 25
+svn:wc:ra_dav:version-url
+V 156
+/apps/appsavr/!svn/ver/15007/avr205_frequency_measurement/trunk/source/Freq_cntr_GCC/avr205_frequency_measure_busy_wait/avr205_frequency_meter_busy_wait.aps
+END
+avr205_frequency_meter_busy_wait_config
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/apps/appsavr/!svn/ver/13585/avr205_frequency_measurement/trunk/source/Freq_cntr_GCC/avr205_frequency_measure_busy_wait/avr205_frequency_meter_busy_wait_config
+END
+avr205_frequency_meter_busy_wait_demo.c
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/apps/appsavr/!svn/ver/14094/avr205_frequency_measurement/trunk/source/Freq_cntr_GCC/avr205_frequency_measure_busy_wait/avr205_frequency_meter_busy_wait_demo.c
+END
+freq_meter.c
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/apps/appsavr/!svn/ver/14095/avr205_frequency_measurement/trunk/source/Freq_cntr_GCC/avr205_frequency_measure_busy_wait/freq_meter.c
+END
+avr205_frequency_meter_busy_wait.aws
+K 25
+svn:wc:ra_dav:version-url
+V 156
+/apps/appsavr/!svn/ver/15008/avr205_frequency_measurement/trunk/source/Freq_cntr_GCC/avr205_frequency_measure_busy_wait/avr205_frequency_meter_busy_wait.aws
+END
