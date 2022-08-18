@@ -70,8 +70,7 @@ ISR (TIMER2_COMPA_vect)   // función de callback para interrupción de comparac
 
 void setup () 
 {
-  Serial.begin(115200);       
-  Serial.println("Frequency Counter");
+  Serial.begin(115200);
 }
 
 void loop () 
