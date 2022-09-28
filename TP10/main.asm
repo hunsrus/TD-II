@@ -1,5 +1,5 @@
 ;
-; TP N°8.asm
+; TP N°10.asm
 ; Authors : Battaglia Carlo y Escobar Gabriel
 ;
 
@@ -30,7 +30,7 @@ ldi r16,15
 sts ICR1L, r16				;Seteamos el TOP del PWM (Resolución=16)
 
 clr r16
-ldi r16, (1 << COM1A1) | (1 << COM1A0) | (1 << WGM11) | (0 << WGM10) ;Ponemos a 'bajo' el OCR1A cuando coincida el Compare Match y Fast PWM: TOP: ICR1
+ldi r16, (1 << COM1A1) | (1 << COM1A0) | (1 << WGM11) | (0 << WGM10) ;Ponemos a BOTTOM el OCR1A cuando coincida el Compare Match y el TOP de Fast PWM dado por ICR1
 sts TCCR1A, r16
 
 clr r16
@@ -39,8 +39,8 @@ sts TCCR1B, r16
 
 clr r16
 sts OCR1AH,r16
-ldi r16, 15
-sts OCR1AL,r16			;Inicio PWM en 0
+ldi r16, 15                 ;Inicio PWM en 0
+sts OCR1AL,r16
 
 ldi r16, (1 << DDD7) | (1 << DDD6) | (1 << DDD5) | (1 << DDD4) | (1 << DDD3) | (1 << DDD2) | (1 << DDD1) | (1 << DDD0)
 out DDRD, r16				;PortD como salida
@@ -53,35 +53,17 @@ andi r16, 0x0F
 ldi r17, 0x0F
 eor r17, r16
 sts OCR1AL, r17
-call BCDTo7Segment
+call HEXTo7Segment
 out PORTD, r16
 rjmp mainloop				;loop infinito
 
-
 ;
-; EjecApp
+; HEXTo7Segment
 ;
-; Ejecuta la aplicación específica pedida en el enunciado 
-;
-EjecApp:
-push r16
-in r16, PINC
-andi r16, 0x0F
-call BCDTo7Segment
-out PORTD, r16
-pop r16
-ret
-
-;
-; BCDTo7Segment
-;
-; Convierte el valor, pasado en el registro r16, a una representación en 
-; display de 7 segmentos, de manera que:
-; Dp g f e d c b a
-; B7 B6 B5 B4 B3 B2 B1 B0
+; Convierte el valor, pasado en el registro r16, a una representación en display de 7 segmentos
 ;
 
-BCDTo7Segment:
+HEXTo7Segment:
 push ZH
 push ZL
 ldi ZH,HIGH(2*BCDTo7Seg) ; Carga la tabla
@@ -96,5 +78,5 @@ ret
 
 ; Tabla de conversión decimal a 7 segmentos
 
-BCDTo7Seg:
+HEXTo7Seg:
 .db 0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F,0x77,0x7C,0x39,0x5E,0x79,0x71
