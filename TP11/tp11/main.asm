@@ -1,19 +1,11 @@
 ;
 ;************************************
 ; Técnicas Digitales II 
-; Autor: GM
-; Fecha: 16-09-2020
-; version: 0.1
+; Autor: Battaglia - Escobar
 ; for AVR: atmega328p (Arduino UNO)
 ; clock frequency: 16MHz 
 ;************************************
 
-;===========================================
-; Función del programa
-; Se deberá realizar un programa que  
-; transmita, a una PC, las teclas
-; presionadas en un teclado matricial.
-;-------------------------------------------
 .ifndef F_CPU
 .set F_CPU = 16000000
 .endif
@@ -26,6 +18,7 @@
 ; Declarations for label
 .set Flags0			= GPIOR0
 .set PressKey		= $0
+.set ContarSeg		= 1
 
 ;===========================================
 ; Etiquetas
@@ -35,6 +28,7 @@
 ; Data Segment
 .dseg
 DATA_KB:			.byte	1
+tres_seg:			.byte	1
 BaseTime1ms:		.byte	1
 BaseTime20ms:		.byte	1
 BaseTime100ms:		.byte	1
@@ -182,9 +176,22 @@ isr_OVF0_handler:
 	out TCNT0,temp
 	lds temp, BaseTime1ms
 	inc temp
-	cpi temp,200
+	cpi temp,200			;chequea si pasaron 200ms
 	brne notime
 	rcall Read_KEY			;Leo el teclado
+	ldi temp, 0
+	sbis Flags0, ContarSeg
+	rjmp notime
+	lds temp, tres_seg
+	inc temp
+	cpi temp, 15			;si pasaron 15 veces 200ms son 3000ms=3s
+	brne no_3_seg
+	
+	rcall display_off
+
+	ldi temp, 0
+no_3_seg:
+	sts tres_seg, temp
 	ldi temp, 0
 notime:
 	sts BaseTime1ms, temp
@@ -239,7 +246,7 @@ ROW_1:
 	;out PORTD,aux
 	CBI	PORTD,7
 	nop
-	in	temp,PINC
+	in	temp,PINB
 	andi temp,0x0f
 	cpi	temp,0x0b	;0000 1011
 	breq IS_KEY_3
@@ -275,7 +282,7 @@ ROW_2:
 	SBI	PORTD,7
 	CBI	PORTD,6
 	nop
-	in	temp,PINC
+	in	temp,PINB
 	andi temp,0x0f
 	cpi	temp,0x0b	;0000 1011
 	breq IS_KEY_6
@@ -311,7 +318,7 @@ ROW_3:
 	SBI	PORTD,6
 	CBI	PORTD,5
 	nop
-	in	temp,PINC
+	in	temp,PINB
 	andi temp,0x0f
 	cpi	temp,0x0b	;0000 1011
 	breq IS_KEY_9
@@ -342,7 +349,8 @@ IS_KEY_7:
 	out Flags0, temp
 	;rjmp out_read_key
 out_read_key:
-	ldi aux,0xF0					;Desactivo los renglones
+	in aux, PORTD
+	ori aux,0xE0					;Desactivo los renglones
 	out PORTD,aux
 	ret  	
 ;======================
@@ -357,27 +365,72 @@ Reset:
 	call Init_Timer0
 	call Init_Port
 			
-	ldi r19,(1 << DDB5)
-	out DDRB, r19
+	;ldi r19,(1 << DDB5)
+	;out DDRB, r19
 
-	clr r18
+	;clr r18
 	sei
 Loop:
-	eor r18,r19					; invert output bit
-	out PORTB,r18				; write to port
-		   
+	;sbic Flags0, TresSeg
+	;rcall display_off
+
 	sbis Flags0,PressKey				 
 	rjmp Loop
 
+	ldi temp, '$'
+	rcall Tx_Byte_USART0		; Send Byte
+	ldi temp, 'T'
+	rcall Tx_Byte_USART0		; Send Byte
+	ldi temp, 'D'
+	rcall Tx_Byte_USART0		; Send Byte
+	ldi temp, '2'
+	rcall Tx_Byte_USART0		; Send Byte
+	ldi temp, ','
+	rcall Tx_Byte_USART0		; Send Byte
 	lds	temp,DATA_KB
+	rcall Tx_Byte_USART0		; Send Byte
+	ldi temp, '*'
+	rcall Tx_Byte_USART0		; Send Byte
+	ldi temp, '\n'
 	rcall Tx_Byte_USART0		; Send Byte
 
 	in temp, Flags0						; Tecla enviada
 	cbr temp, (1 << PressKey)			; PressKey = 0 en Flags0
 	out Flags0, temp
 
+	rcall write_digit
+
+	clr temp
+	sts tres_seg, temp			;reseteo el contador de 3 segundos
+
+	in temp, Flags0
+	sbr temp, (1 << ContarSeg)	;empiezo a contar 3 segundos
+	out Flags0, temp
+
 	rjmp Loop            ; loop back to the start
 
+display_off:
+	clr temp
+	out PORTC, temp
+	cbi PORTD, 4
+
+	in temp, Flags0
+	cbr temp, (1 << ContarSeg)	;dejo de contar 3 segundos
+	out Flags0, temp
+
+	ret
+
+write_digit:
+	push temp
+	lds temp, DATA_KB
+	subi temp, 0x30
+	rcall BCD_to_7_segment
+	out PORTC, r16
+	cbi PORTD, 4
+	sbrc temp, 6
+	sbi PORTD, 4
+	pop temp
+ret
 ;===========================================
 ; Init_Timer0
 ; Inicia el Timer 0 para desborde cada 1 mseg
@@ -427,16 +480,19 @@ Init_Timer0:
 Init_Port:
 	ldi temp, (1<<DDD7) | (1<<DDD6) | (1<<DDD5) | (1<<DDD4)
 	out DDRD, temp			; PortD como salida
-	;clr temp				; Borro el PortD
-	ldi temp, (1<<PD7) | (1<<PD6) | (1<<PD5) | (1<<PD4)
+	clr temp				; Borro el PortD
+	ldi temp, (1<<PD7) | (1<<PD6) | (1<<PD5) | (0<<PD4)
 	out PORTD, temp			;Puerto en ALTO
-	
-	ldi aux, (1<<DDC3) | (1<<DDC2) | (1<<DDC1) | (1<<DDC0)
-	out PORTC, aux			; Activo resistencias de Pull-Up
-	out DDRC, temp			; PortC como entrada
 
-	ldi temp,$20
-	out DDRB,temp			;PortB.5 como salida (Pin 13 Arduino)
+	ldi temp, (1<<DDC5) | (1<<DDC4) | (1<<DDC3) | (1<<DDC2) | (1<<DDC1) | (1<<DDC0)
+	out DDRC, temp			; PortC como salida
+	clr temp				; Borro el PortC
+	out PORTC, temp
+	
+	ldi aux, (1<<DDB3) | (1<<DDB2) | (1<<DDB1) | (1<<DDB0)
+	out PORTB, aux			; Activo resistencias de Pull-Up
+	out DDRB, temp			; PortC como entrada
+
 	ret
 	  
 ;===========================================
@@ -493,3 +549,27 @@ Rx_Byte_USART0:
 		   lds r16, UDR0
 		   ret
 }
+
+;===========================================
+; BCDTo7Segment
+;
+; Convierte el valor, pasado en el registro r16, a una representación en 
+; display de 7 segmentos, de manera que:
+; Dp g f e d c b a
+; B7 B6 B5 B4 B3 B2 B1 B0
+;
+BCD_to_7_segment:
+push ZH
+push ZL
+ldi ZH,HIGH(2*BCDTo7Seg) ; Carga la tabla
+ldi ZL,LOW(2*BCDTo7Seg)
+add ZL,r16
+lpm
+mov r16,R0
+pop ZL
+pop ZH
+ret
+
+; Tabla de conversión decimal a 7 segmentos
+BCDTo7Seg:
+.db 0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F

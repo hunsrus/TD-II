@@ -1,0 +1,216 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{esint}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+
+ \lstdefinestyle{customc}{                                                   
+    language=C,
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{escapechar=@,style=customc}
+
+\lstset{literate=
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {ã}{{\~a}}1 {ẽ}{{\~e}}1 {ĩ}{{\~i}}1 {õ}{{\~o}}1 {ũ}{{\~u}}1
+  {Ã}{{\~A}}1 {Ẽ}{{\~E}}1 {Ĩ}{{\~I}}1 {Õ}{{\~O}}1 {Ũ}{{\~U}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+  {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1 {¡}{{!`}}1  {°}    {{$^\circ$}}1
+}
+
+\setlength{\marginparwidth}{2cm}
+\begin{document}
+\begin{titlepage}
+	\begin{center}
+		{\large{UNIVERSIDAD TECNOLÓGICA NACIONAL}}
+	\end{center}
+	\vspace{15pt}
+	\begin{figure}[!ht]
+		\centering
+		\begin{center}
+			\includegraphics[width=5cm]{utn.png}
+		\end{center}
+	\end{figure}
+	\vspace{5pt}
+	\begin{center}
+		{\large{FACULTAD REGIONAL PARANÁ}}
+		\vspace{5pt}
+		\begin{center}
+			\vspace{15pt}
+			\normalsize{CARRERA: Ingeniería Electrónica\\
+						CÁTEDRA: Técnicas Digitales II\\}
+			\vspace{50pt}
+			\huge\bfseries{Trabajo Práctico N°5\\
+						Control de un motor de corriente continua\\}
+			\vspace{50pt}
+		\end{center}
+		
+		\begin{flushleft}
+			\begin{center}
+				ALUMNOS:\\
+				Battaglia Carlo\\
+				Escobar Gabriel\\
+			\end{center}
+		\end{flushleft}
+		
+		\begin{center}
+			\vspace{\fill}
+			\normalsize{Paraná,}
+			\today
+		\end{center}
+	\end{center}
+\end{titlepage}
+
+\newpage
+\pagenumbering{arabic}
+\numberwithin{equation}{section}
+
+\section{Desarrollo}
+
+Para este circuito se optó por utilizar un motor de corriente continua de $12[V]$ de bajo consumo ($600[mA]$). Para comandar la velocidad de este motor se utiliza un Arduino UNO. Además, se añade una etapa de potencia que permite vincular el Arduino con el motor. En esta etapa se dispone de un transistor $TIP122$ (Darlington) el cual permite la alimentación del motor siendo controlado por el Arduino.
+
+Debido a que es un motor de corriente continua se podrá regular su velocidad acorde a la tensión que se le aplique entre sus terminales de alimentación siendo una relación directa (entre tensión y velocidad).
+
+El Arduino a través del pin digital $3$ enviara una señal PWM la cual, a través de una resistencia, se inyecta a la base del Darlington. La señal permite regular la velocidad de giro que adquiera el motor. Las velocidades que podrá desarrollar son discretas con saltos de un $10\%$ respecto a la velocidad total que pudiera desarrollar, dando un total de $9$ velocidades distintas.
+
+El terminal negativo del motor se conecta al colector del transistor y el terminal positivo a $Vcc$ ($12[V]$). De esta manera se consigue que en el momento que se sature el Darlington, el motor tome la referencia de $GND$ a través del emisor.
+
+Se dispone de un pulsador para encender/apagar el motor el cual está conectado a una entrada de interrupción del Arduino a través del pin $2$. Al encenderse el motor, se establece automáticamente una velocidad de giro del $50\%$. Además, el circuito cuenta con dos pulsadores mas que tienen el propósito de aumentar y reducir la velocidad del motor, ambos lo harán a un $10\%$ de la velocidad. El pulsador utilizado para aumentar la velocidad se lo conecta como entrada al pin $7$ y el pulsador para disminuir la velocidad al pin $8$. El aumento o la disminución de la velocidad debe responder únicamente cuando el motor se encuentre encendido no en caso contrario. Además, la velocidad máxima que podrá conseguir el motor se producirá al $90\%$ de la tensión de alimentación no debiendo permitir que la misma aumente si se sigue presionando el pulsador para aumentarla. De manera similar, la velocidad mínima que podrá conseguir el motor se producirá al $10\%$ de la tensión de alimentación no debiendo permitir que la misma disminuya si se sigue presionando el pulsador para este fin.
+
+Por último, se utiliza el led del Arduino para indicar el funcionamiento del motor o para indicar el modo \textit{Stand By}.
+
+\section{Circuito implementado}
+
+\begin{center}
+	\includegraphics[width=14cm]{TP N°5.png}
+\end{center}
+
+\section{Código}
+
+Definición y declaración de variables.
+
+\begin{lstlisting}[language=C]
+#define VEL_MAX 230
+#define VEL_MIN 26
+#define VEL_STEP 26
+#define M_STOPPED 0
+#define M_RUNNING 1
+#define COOLDOWN_MS 100
+
+int pinPWM = 3;
+int pinOnOff = 2;
+int pinVelUp = 7;
+int pinVelDown = 8;
+unsigned long coolDown;
+byte vel = 128;
+bool state = M_STOPPED;
+\end{lstlisting}
+
+Parámetros de configuración de entradas, salidas y de la interrupción.
+
+\begin{lstlisting}
+void setup()
+{
+    pinMode(LED_BUILTIN, OUTPUT);
+    pinMode(pinPWM, OUTPUT);
+    pinMode(pinOnOff, INPUT);
+    pinMode(pinVelUp, INPUT);
+    pinMode(pinVelDown, INPUT);
+    attachInterrupt(digitalPinToInterrupt(pinOnOff), switchMotorOnOff, RISING);
+    coolDown = millis();
+}
+\end{lstlisting}
+ 
+Función loop.
+
+\begin{lstlisting}
+void loop()
+{
+    if(state == M_RUNNING)
+    {
+        if(millis() - coolDown > COOLDOWN_MS)
+            if(digitalRead(pinVelUp) && (vel < VEL_MAX))
+            {
+                vel += VEL_STEP;
+                coolDown = millis();
+            }else if(digitalRead(pinVelDown) && (vel > VEL_MIN))
+            {
+                vel -= VEL_STEP;
+                coolDown = millis();
+            }
+    }else
+    {
+        vel = 0;
+        digitalWrite(LED_BUILTIN,!digitalRead(LED_BUILTIN));
+        delay(200);
+    }
+    analogWrite(pinPWM,vel);
+}
+\end{lstlisting}
+
+El primer condicional \textit{if} corrobora que el motor este encendido.
+
+El segundo condicional se lo utiliza con dos propósitos, uno de ellos es para evitar pulsaciones sucesibas (rebote) y el otro para permitir que se pueda mantener pulsado el botón para aumentar o disminuir la velocidad.
+
+El tercer y cuarto condicional son para aumentar o disminuir la velocidad del motor respectivamente. Una vez dentro del condicional se establece la nueva velocidad.
+
+El \textit{else} implica que no se encuentra presionado ningún pulsador por lo cual establece la velocidad en cero y cambia el estado del led de status junto con un pequeño delay. Si no se está presionando ningún botón durante un tiempo, se produce el parpadeo de este led de status por lo que determina el estado de \textit{Stand By}.
+
+Al final de cada bucle se escribe el valor de la velocidad en el pin utilizado para el PWM.
+
+Por último, la función asociada a la interrupción.
+
+\begin{lstlisting}
+void switchMotorOnOff()
+{
+    if(millis() - coolDown > COOLDOWN_MS)
+    {
+        state = !state;
+        vel = 128;
+        coolDown = millis();
+        digitalWrite(LED_BUILTIN,HIGH);
+    }
+}
+\end{lstlisting}
+
+Esta función cambia el estado de encendido a apagado del motor o viceversa, establece la velocidad de funcionamiento al $50\%$ y enciende el led de status.
+
+\end{document}

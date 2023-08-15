@@ -1,0 +1,123 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\Release</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:/MicrochipStudio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>D:\MicrochipStudio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:/MicrochipStudio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\Release\Ejercicio1-Parcial2.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Ejercicio1-Parcial2.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Ejercicio1-Parcial2.map</FILE>
+  <FILE>Ejercicio1-Parcial2.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <CadenaRp><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>29</LINE></CadenaRp>
+  <pwm_table><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>31</LINE></pwm_table>
+  <VAL_PWM><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>32</LINE></VAL_PWM>
+  <Temp_OCR0A><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>33</LINE></Temp_OCR0A>
+  <BCDR0><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>34</LINE></BCDR0>
+  <BCDR1><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>35</LINE></BCDR1>
+  <BCDR2><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>36</LINE></BCDR2>
+  <BCDdigit><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>37</LINE></BCDdigit>
+  <indexRx><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>38</LINE></indexRx>
+  <BUFFER><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>39</LINE></BUFFER>
+  <Reset><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>254</LINE></Reset>
+  <isr_INT0_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>124</LINE></isr_INT0_handler>
+  <isr_INT1_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>127</LINE></isr_INT1_handler>
+  <isr_PCI0_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>130</LINE></isr_PCI0_handler>
+  <isr_PCI1_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>133</LINE></isr_PCI1_handler>
+  <isr_PCI2_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>136</LINE></isr_PCI2_handler>
+  <isr_WDT_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>139</LINE></isr_WDT_handler>
+  <isr_OC2A_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>142</LINE></isr_OC2A_handler>
+  <isr_OC2B_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>145</LINE></isr_OC2B_handler>
+  <isr_OVF2_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>148</LINE></isr_OVF2_handler>
+  <isr_ICP1_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>151</LINE></isr_ICP1_handler>
+  <isr_OC1A_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>154</LINE></isr_OC1A_handler>
+  <isr_OC1B_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>157</LINE></isr_OC1B_handler>
+  <isr_OVF1_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>160</LINE></isr_OVF1_handler>
+  <isr_OC0A_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>163</LINE></isr_OC0A_handler>
+  <isr_OC0B_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>188</LINE></isr_OC0B_handler>
+  <isr_OVF0_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>191</LINE></isr_OVF0_handler>
+  <isr_SPI_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>194</LINE></isr_SPI_handler>
+  <isr_URXC_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>197</LINE></isr_URXC_handler>
+  <isr_UDRE_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>230</LINE></isr_UDRE_handler>
+  <isr_UTXC_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>233</LINE></isr_UTXC_handler>
+  <isr_ADCC_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>236</LINE></isr_ADCC_handler>
+  <isr_ERDY_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>239</LINE></isr_ERDY_handler>
+  <isr_ACI_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>242</LINE></isr_ACI_handler>
+  <isr_TWI_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>245</LINE></isr_TWI_handler>
+  <isr_SPMR_handler><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>248</LINE></isr_SPMR_handler>
+  <salir><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>180</LINE></salir>
+  <_noini><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>214</LINE></_noini>
+  <_ini><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>211</LINE></_ini>
+  <Setup><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>264</LINE></Setup>
+  <EEPROM_read><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>279</LINE></EEPROM_read>
+  <USART_Init><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>292</LINE></USART_Init>
+  <init_PWM><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>454</LINE></init_PWM>
+  <Loop><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>471</LINE></Loop>
+  <set_baudrate><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>319</LINE></set_baudrate>
+  <set_databits><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>397</LINE></set_databits>
+  <set_parity><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>423</LINE></set_parity>
+  <set_stopbit><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>442</LINE></set_stopbit>
+  <baudrate1><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>329</LINE></baudrate1>
+  <baudrate2><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>339</LINE></baudrate2>
+  <baudrate3><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>349</LINE></baudrate3>
+  <baudrate4><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>359</LINE></baudrate4>
+  <baudrate5><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>369</LINE></baudrate5>
+  <baudrate6><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>379</LINE></baudrate6>
+  <baudrate7><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>389</LINE></baudrate7>
+  <databits6><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>404</LINE></databits6>
+  <databits7><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>411</LINE></databits7>
+  <databits8><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>418</LINE></databits8>
+  <odd><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>430</LINE></odd>
+  <even><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>437</LINE></even>
+  <two><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>449</LINE></two>
+  <Get_COMM_PC><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>484</LINE></Get_COMM_PC>
+  <Procesamiento><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>477</LINE></Procesamiento>
+  <PWM_bcd_to_bin><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>776</LINE></PWM_bcd_to_bin>
+  <Escalar_PWM><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>835</LINE></Escalar_PWM>
+  <Send_Rsp><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>607</LINE></Send_Rsp>
+  <dato1><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>495</LINE></dato1>
+  <dato2><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>508</LINE></dato2>
+  <dato3><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>526</LINE></dato3>
+  <nodata><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>561</LINE></nodata>
+  <Verify><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>564</LINE></Verify>
+  <errores><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>544</LINE></errores>
+  <no_hay_error><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>554</LINE></no_hay_error>
+  <error><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>602</LINE></error>
+  <enviar_dato><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>609</LINE></enviar_dato>
+  <Tx_Byte_USART0><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>617</LINE></Tx_Byte_USART0>
+  <symbol1><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>627</LINE></symbol1>
+  <symbol2><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>634</LINE></symbol2>
+  <symbol4><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>641</LINE></symbol4>
+  <symbol5><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>648</LINE></symbol5>
+  <symbol6><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>655</LINE></symbol6>
+  <symbol7><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>662</LINE></symbol7>
+  <symbol8><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>669</LINE></symbol8>
+  <symbol9><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>676</LINE></symbol9>
+  <symbol10><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>683</LINE></symbol10>
+  <symbol11><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>690</LINE></symbol11>
+  <symbol12><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>697</LINE></symbol12>
+  <symbol13><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>730</LINE></symbol13>
+  <son_dos><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>712</LINE></son_dos>
+  <es_uno><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>722</LINE></es_uno>
+  <symbol14><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>753</LINE></symbol14>
+  <queda_uno><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>745</LINE></queda_uno>
+  <symbol15><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>763</LINE></symbol15>
+  <symbol16><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>770</LINE></symbol16>
+  <convert3><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>809</LINE></convert3>
+  <convert2><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>796</LINE></convert2>
+  <exit><FILE>D:\4to Ingeniería Electrónica\Técnicas Digitales II\parcial II\Ejercicio1-Parcial2\Ejercicio1-Parcial2\main.asm</FILE><LINE>828</LINE></exit>
+ </LABELS>
+</ASSEMBLER_INFO>

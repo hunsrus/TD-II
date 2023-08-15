@@ -1,0 +1,296 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{esint}
+\usepackage{multicol}
+\usepackage{listings}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}                                       
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+ \lstdefinestyle{customc}{                                                       
+    language=C,
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,                                                 
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{escapechar=@,style=customc}
+
+ \lstset{literate=
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {ã}{{\~a}}1 {ẽ}{{\~e}}1 {ĩ}{{\~i}}1 {õ}{{\~o}}1 {ũ}{{\~u}}1
+  {Ã}{{\~A}}1 {Ẽ}{{\~E}}1 {Ĩ}{{\~I}}1 {Õ}{{\~O}}1 {Ũ}{{\~U}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+  {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1 {¡}{{!`}}1  {°}    {{$^\circ$}}1
+}
+
+\setlength{\marginparwidth}{2cm}
+\begin{document}
+\begin{titlepage}
+	\begin{center}
+		{\large{UNIVERSIDAD TECNOLÓGICA NACIONAL}}
+	\end{center}
+	\vspace{15pt}
+	\begin{figure}[!ht]
+		\centering
+		\begin{center}
+			\includegraphics[width=5cm]{utn.png}
+		\end{center}
+	\end{figure}
+	\vspace{5pt}
+	\begin{center}
+		{\large{FACULTAD REGIONAL PARANÁ}}
+		\vspace{5pt}
+		\begin{center}
+			\vspace{15pt}
+			\normalsize{CARRERA: Ingeniería Electrónica\\
+						CÁTEDRA: Técnicas Digitales II\\}
+			\vspace{50pt}
+			\huge\bfseries{Trabajo Práctico N°6\\
+				Control desde la PC del TP Nro 5\\}
+\vspace{50pt}
+		\end{center}
+		
+		\begin{flushleft}
+			\begin{center}
+				ALUMNOS:\\
+				Battaglia Carlo\\
+				Escobar Gabriel\\
+			\end{center}
+		\end{flushleft}
+		
+		\begin{center}
+			\vspace{\fill}
+			\normalsize{Paraná,}
+			\today
+		\end{center}
+	\end{center}
+\end{titlepage}
+
+\newpage
+\pagenumbering{arabic}
+\numberwithin{equation}{section}
+
+\section{Circuito implementado}
+
+Mismo circuito que en el TP N°5.
+
+\section{Código}
+
+Definición y declaración de variables.
+
+\begin{lstlisting}
+#define VEL_MAX 230
+#define VEL_MIN 26
+#define VEL_STEP 26
+#define M_STOPPED 0
+#define M_RUNNING 1
+#define M_MANUAL 0
+#define M_REMOTE 1
+#define COOLDOWN_MS 100
+
+int pinPWM = 3;
+int pinOnOff = 2;
+int pinVelUp = 7;
+int pinVelDown = 8;
+unsigned long coolDown;
+byte vel = 128;
+bool state = M_STOPPED;
+bool mode = M_MANUAL;
+bool stringComplete;
+String inputString;
+\end{lstlisting}
+
+Parámetros de configuración de entradas, salidas, de la interrupción y se inicializa la comunicación serial a 9600 baudios.
+
+\begin{lstlisting}
+void setup()
+{
+    pinMode(LED_BUILTIN, OUTPUT);
+    pinMode(pinPWM, OUTPUT);
+    pinMode(pinOnOff, INPUT);
+    pinMode(pinVelUp, INPUT);
+    pinMode(pinVelDown, INPUT);
+    attachInterrupt(digitalPinToInterrupt(pinOnOff), switchMotorOnOff, RISING);
+    coolDown = millis();
+
+    Serial.begin(9600);
+    inputString.reserve(200);
+}
+\end{lstlisting}
+
+\newpage
+Función loop.
+
+\begin{lstlisting}
+void loop()
+{
+    if(state == M_RUNNING)
+    {
+        if((millis() - coolDown > COOLDOWN_MS) && (mode == M_MANUAL))
+        {
+            if(digitalRead(pinVelUp)) motorVelUp();
+            else if(digitalRead(pinVelDown)) motorVelDown();
+        }
+    }else
+    {
+        vel = 0;
+        digitalWrite(LED_BUILTIN,!digitalRead(LED_BUILTIN));
+        delay(200);
+    }
+    analogWrite(pinPWM,vel);
+}
+\end{lstlisting}
+
+Lo primero que se verifica en esta función es que el motor se encuentre encendido. Luego, se corrobora que este activo el modo de funcionamiento manual. Si así lo es, se llamará a la función para aumentar o para disminuir la velocidad acorde al botón que se haya pulsado. Si no se presionó ningún botón, se establece la velocidad en cero. Finalmente se escribe en el pin de PWM la nueva velocidad que tendrá el motor.
+Función asociada a la interrupción.
+
+\begin{lstlisting}
+	void switchMotorOnOff()
+{
+    if((millis() - coolDown > COOLDOWN_MS) && (mode == M_MANUAL))
+    {
+        state = !state;
+        vel = 128;
+        coolDown = millis();
+        digitalWrite(LED_BUILTIN,HIGH);
+    }
+}
+\end{lstlisting}
+
+Esta función cambia el estado de encendido a apagado del motor o viceversa, establece la velocidad de funcionamiento al 50\% y enciende el led de status siempre y cuando el modo de funcionamiento se encuentre en MANUAL.
+Funciones asociadas a aumentar y disminuir la velocidad en un 10\% respectivamente.
+\newpage
+\begin{lstlisting}
+void motorVelUp()
+{
+    if(vel < VEL_MAX) vel += VEL_STEP;
+    coolDown = millis();
+}
+void motorVelDown()
+{
+    if(vel > VEL_MIN) vel -= VEL_STEP;
+    coolDown = millis();
+}
+\end{lstlisting}
+
+Función para establecer el valor de la velocidad del motor cuando se encuentre activo el funcionamiento en modo REMOTO.
+
+\begin{lstlisting}
+bool setMotorVel(float velPercent)
+{
+    bool ret = true;
+    if((velPercent <= 100) && (velPercent >= 0)) vel = velPercent*255/100;
+    else ret = false;
+    return ret;
+}
+\end{lstlisting}
+
+Función que se ejecuta al final de la función loop cuando haya datos disponibles en el puerto serial.
+
+\begin{lstlisting}
+void serialEvent()
+{
+    while (Serial.available())
+    {
+        char code, inChar = (char)Serial.read();
+        float velPercent;
+        String ret = "$TD2,OK*";
+        inputString += inChar;
+        if (inChar == '\n')
+        {
+            code = inputString.charAt(5);
+            if(inputString.substring(0,5).equals("$TD2,") && (inputString.length() <= 12) && inputString.endsWith("*\n") && (code == 'a' || mode == M_REMOTE))
+            {
+                switch (code)
+                {
+                    case 'a':
+                        mode = M_REMOTE;
+                    break;
+                    case 'b':
+                        mode = M_MANUAL;
+                    break;
+                    case 'c':
+                        state = M_RUNNING;
+                        vel = 128;
+                        digitalWrite(LED_BUILTIN,HIGH);
+                    break;
+                    case 'd':
+                        state = M_STOPPED;
+                        vel = 128;
+                    break;
+                    case 'e':
+                        motorVelUp();
+                    break;
+                    case 'f':
+                        motorVelDown();
+                    break;
+                    case 'g':
+                        velPercent = inputString.substring(7,inputString.indexOf('*')).toFloat();
+                        if(!setMotorVel(velPercent)) ret = "$TD2,Err*";
+                    break;
+                    default:
+                        ret = "$TD2,Err*";
+                    break;
+                }
+            }else ret = "$TD2,Err*";
+            Serial.println(ret);
+            inputString = "";
+        }
+    }
+}
+\end{lstlisting}
+
+Dentro de esta función se ejecuta un bucle mientras existan datos en el puerto serial.
+
+En cada iteración del bucle, se guarda cada caracter leído en el puerto en una variable tipo ``char'' que luego se acumula en otra de tipo ``String''. Esta última variable contendrá el mensaje completo que se envió al puerto serial.
+
+Si el ultimo carácter leído en el puerto es un salto de línea, se ingresa al condicional ``if''.
+
+Como la información útil viene en la quinta posición del mensaje enviado, tomamos este caracter que nos determinara la acción a realizar dependiendo de su contenido. El contenido del mismo, para un correcto funcionamiento, debería ser a, b, c, d, e, f o g.
+
+Mediante la segunda condición se comprueba que el largo del mensaje recibido no supere el tamaño del mayor posible mensaje a recibir, ya que si fuera así el mensaje quedaría descartado.
+
+La tercera condición corrobora que el mensaje recibido finalice con un salto de línea.
+
+Finalmente, la última condición verifica que el modo actual de funcionamiento sea REMOTO.
+
+Una vez cumplida todas las condiciones mencionadas con anterioridad, se ingresa a un condicional ``switch''.
+
+Dependiendo del carácter leído realizara la tarea correspondiente.
+
+Se guarda el resultado de la operación en una variable ``String'', dependiendo del éxito o no de la misma, con un mensaje que lo identifica.
+
+Finalmente, se envía al puerto serie este resultado y se limpia el contenido de la ``String'' mensaje.
+
+\end{document}

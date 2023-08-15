@@ -1,0 +1,89 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\Debug\Parcial II - Ejercicio 2.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Parcial II - Ejercicio 2.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Parcial II - Ejercicio 2.map</FILE>
+  <FILE>Parcial II - Ejercicio 2.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <BUFFER><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>24</LINE></BUFFER>
+  <BF_INDEX><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>25</LINE></BF_INDEX>
+  <VAL_RH><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>26</LINE></VAL_RH>
+  <VAL_TEMP><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>27</LINE></VAL_TEMP>
+  <start><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>192</LINE></start>
+  <isr_INT0_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>86</LINE></isr_INT0_handler>
+  <isr_INT1_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>89</LINE></isr_INT1_handler>
+  <isr_PCI0_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>92</LINE></isr_PCI0_handler>
+  <isr_PCI1_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>95</LINE></isr_PCI1_handler>
+  <isr_PCI2_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>98</LINE></isr_PCI2_handler>
+  <isr_WDT_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>101</LINE></isr_WDT_handler>
+  <isr_OC2A_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>104</LINE></isr_OC2A_handler>
+  <isr_OC2B_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>107</LINE></isr_OC2B_handler>
+  <isr_OVF2_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>110</LINE></isr_OVF2_handler>
+  <isr_ICP1_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>113</LINE></isr_ICP1_handler>
+  <isr_OC1A_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>116</LINE></isr_OC1A_handler>
+  <isr_OC1B_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>119</LINE></isr_OC1B_handler>
+  <isr_OVF1_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>122</LINE></isr_OVF1_handler>
+  <isr_OC0A_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>125</LINE></isr_OC0A_handler>
+  <isr_OC0B_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>128</LINE></isr_OC0B_handler>
+  <isr_OVF0_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>131</LINE></isr_OVF0_handler>
+  <isr_SPI_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>134</LINE></isr_SPI_handler>
+  <isr_URXC_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>137</LINE></isr_URXC_handler>
+  <isr_UDRE_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>171</LINE></isr_UDRE_handler>
+  <isr_UTXC_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>174</LINE></isr_UTXC_handler>
+  <isr_ADCC_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>177</LINE></isr_ADCC_handler>
+  <isr_ERDY_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>180</LINE></isr_ERDY_handler>
+  <isr_ACI_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>183</LINE></isr_ACI_handler>
+  <isr_TWI_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>186</LINE></isr_TWI_handler>
+  <isr_SPMR_handler><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>189</LINE></isr_SPMR_handler>
+  <_no_start_cmd><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>153</LINE></_no_start_cmd>
+  <_no_end_cmd><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>162</LINE></_no_end_cmd>
+  <USART0_init><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>380</LINE></USART0_init>
+  <ADC_init><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>419</LINE></ADC_init>
+  <ADC_ch_set><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>436</LINE></ADC_ch_set>
+  <ADC_get><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>446</LINE></ADC_get>
+  <main><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>218</LINE></main>
+  <CHN_get><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>239</LINE></CHN_get>
+  <BUFF_check><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>327</LINE></BUFF_check>
+  <ERR_response><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>312</LINE></ERR_response>
+  <Cadena><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>530</LINE></Cadena>
+  <_read_string><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>244</LINE></_read_string>
+  <_pick_channel><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>250</LINE></_pick_channel>
+  <USART0_tx><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>404</LINE></USART0_tx>
+  <_pick_CHB><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>266</LINE></_pick_CHB>
+  <_pick_CHA><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>253</LINE></_pick_CHA>
+  <_get_value><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>276</LINE></_get_value>
+  <RH_map><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>470</LINE></RH_map>
+  <BIN2BCD8><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>498</LINE></BIN2BCD8>
+  <CadenaERR><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>531</LINE></CadenaERR>
+  <_read_string_err><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>317</LINE></_read_string_err>
+  <_string_complete><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>323</LINE></_string_complete>
+  <_cmd_error><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>355</LINE></_cmd_error>
+  <_read_buffer><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>346</LINE></_read_buffer>
+  <_buffer_end><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>368</LINE></_buffer_end>
+  <_check_channel><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>358</LINE></_check_channel>
+  <_USART0_wait><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>407</LINE></_USART0_wait>
+  <_adc_loop1><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>453</LINE></_adc_loop1>
+  <Tabla_RH><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>537</LINE></Tabla_RH>
+  <bBCD8_1><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>501</LINE></bBCD8_1>
+  <bBCD8_2><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>506</LINE></bBCD8_2>
+  <EEPROM_read><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>512</LINE></EEPROM_read>
+  <Tabla_TEMP><FILE>Z:\4\Técnicas Digitales II\Trabajos prácticos\Parcial II\Parcial II - Ejercicio 2\Parcial II - Ejercicio 2\main.asm</FILE><LINE>549</LINE></Tabla_TEMP>
+ </LABELS>
+</ASSEMBLER_INFO>

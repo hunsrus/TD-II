@@ -1,0 +1,40 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>C:\Users\carlo\Documents\Atmel Studio\7.0\TP N°9\TP N°9\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\carlo\Documents\Atmel Studio\7.0\TP N°9\TP N°9\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\carlo\Documents\Atmel Studio\7.0\TP N°9\TP N°9\Debug\TP N°9.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>TP N°9.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>TP N°9.map</FILE>
+  <FILE>TP N°9.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <start><FILE>C:\Users\carlo\Documents\Atmel Studio\7.0\TP N°9\TP N°9\main.asm</FILE><LINE>23</LINE></start>
+  <isr_PCI1_handler><FILE>C:\Users\carlo\Documents\Atmel Studio\7.0\TP N°9\TP N°9\main.asm</FILE><LINE>86</LINE></isr_PCI1_handler>
+  <isr_OVF1_handler><FILE>C:\Users\carlo\Documents\Atmel Studio\7.0\TP N°9\TP N°9\main.asm</FILE><LINE>103</LINE></isr_OVF1_handler>
+  <mainloop><FILE>C:\Users\carlo\Documents\Atmel Studio\7.0\TP N°9\TP N°9\main.asm</FILE><LINE>64</LINE></mainloop>
+  <dividir><FILE>C:\Users\carlo\Documents\Atmel Studio\7.0\TP N°9\TP N°9\main.asm</FILE><LINE>77</LINE></dividir>
+  <resto><FILE>C:\Users\carlo\Documents\Atmel Studio\7.0\TP N°9\TP N°9\main.asm</FILE><LINE>82</LINE></resto>
+  <noHacerNada><FILE>C:\Users\carlo\Documents\Atmel Studio\7.0\TP N°9\TP N°9\main.asm</FILE><LINE>99</LINE></noHacerNada>
+  <DecodeNum><FILE>C:\Users\carlo\Documents\Atmel Studio\7.0\TP N°9\TP N°9\main.asm</FILE><LINE>111</LINE></DecodeNum>
+  <num6><FILE>C:\Users\carlo\Documents\Atmel Studio\7.0\TP N°9\TP N°9\main.asm</FILE><LINE>137</LINE></num6>
+  <num5><FILE>C:\Users\carlo\Documents\Atmel Studio\7.0\TP N°9\TP N°9\main.asm</FILE><LINE>134</LINE></num5>
+  <num4><FILE>C:\Users\carlo\Documents\Atmel Studio\7.0\TP N°9\TP N°9\main.asm</FILE><LINE>131</LINE></num4>
+  <num3><FILE>C:\Users\carlo\Documents\Atmel Studio\7.0\TP N°9\TP N°9\main.asm</FILE><LINE>128</LINE></num3>
+  <num2><FILE>C:\Users\carlo\Documents\Atmel Studio\7.0\TP N°9\TP N°9\main.asm</FILE><LINE>125</LINE></num2>
+  <num1><FILE>C:\Users\carlo\Documents\Atmel Studio\7.0\TP N°9\TP N°9\main.asm</FILE><LINE>122</LINE></num1>
+ </LABELS>
+</ASSEMBLER_INFO>
